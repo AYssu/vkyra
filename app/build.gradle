@@ -212,7 +212,7 @@ dependencies {
     implementation 'org.tukaani:xz:1.11'
 
     // OkHttp - HTTP client (下载及网络请求)
-    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.squareup.okhttp3:okhttp:5.5.1'
     
     // Markwon - Markdown rendering
     implementation libs.markwon.core
