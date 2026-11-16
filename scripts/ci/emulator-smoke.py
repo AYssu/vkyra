@@ -117,7 +117,9 @@ try:
     # Do not require clearing system buffers: API26 logd can reject it even when
     # instrumentation and log reading work. Preserve logs and anchor this run.
     device('shell', 'date', '+%s', name='device-test-start-time.txt')
+    device('shell', 'df', '-k', '/data', name='storage-before-toolchain.txt')
     instrumentation('toolchain-preparation.txt', 'com.vkyra.code.toolchain.ToolchainRuntimeTest', 1)
+    device('shell', 'df', '-k', '/data', name='storage-before-regression.txt')
     instrumentation('debug-full.txt', None, int(manifest['androidTestCount']))
     # Install the exact real R8 output with the test certificate, retaining only the
     # freshly installed toolchain data. The installed app must remain non-debuggable.

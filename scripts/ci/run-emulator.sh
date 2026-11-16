@@ -32,7 +32,7 @@ if [[ "$api" == 37 ]]; then
   graphics_features=(-feature GLDirectMem -feature HasSharedSlotsHostMemoryAllocator)
 fi
 "$sdk_root/emulator/emulator" -avd "$avd_name" -port 5556 -no-window -no-audio -no-boot-anim \
-  -no-snapshot -gpu swiftshader "${graphics_features[@]}" -memory 3072 -cores 2 >build/ci-evidence/emulator.log 2>&1 &
+  -no-snapshot -gpu swiftshader "${graphics_features[@]}" -partition-size 8192 -memory 3072 -cores 2 >build/ci-evidence/emulator.log 2>&1 &
 emulator_pid=$!
 cleanup() {
   # Kill only the process created above, never another emulator/device.
