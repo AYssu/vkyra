@@ -75,7 +75,7 @@ dependencies {
     // the app already gets this interface from Guava 24.1-jre. R8 may rename or
     // remove the app's test-unused copy; Espresso still requires its original
     // name, so the independent driver must own that same complete runtime.
-    implementation 'com.google.guava:guava:24.1-jre'
+    implementation 'com.google.guava:guava:33.8.0-jre'
 
     // Instrumentation and target share a class loader. AndroidX Test otherwise
     // contributes lifecycle-common 2.3.1, whose Java Lifecycle.Event lacks the
