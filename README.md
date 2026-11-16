@@ -1,23 +1,61 @@
-# Vkyra
+<p align="center">
+  <img src="docs/assets/brand/logo.png" alt="Vkyra 紫色 V 形环绕标记与字标" width="200" />
+</p>
 
-**C/C++ IDE · Powered by Clang**
+<h1 align="center">Vkyra</h1>
+<p align="center"><strong>C/C++ IDE · Powered by Clang</strong></p>
+<p align="center">在 Android 上，编写、编译、运行你的 C/C++ 项目。</p>
 
-Vkyra 是面向 Android 的 C/C++ 开发环境，提供代码编辑、clangd 语言服务、编译运行、终端、Git、插件与 APK 导出。应用包名为 `com.vkyra.code`，支持 Android 8.0（API 26）及以上设备，提供 ARM64 与 x86_64 两种安装包。
+<p align="center">
+  <a href="https://github.com/AYssu/vkyra/actions/workflows/ci.yml"><img src="https://github.com/AYssu/vkyra/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI" /></a>
+  <img src="https://img.shields.io/badge/Android-8.0%2B-8B5CF6" alt="Android 8.0 及以上" />
+  <img src="https://img.shields.io/badge/ABI-ARM64%20%7C%20x86__64-6D28D9" alt="ARM64 与 x86_64" />
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--only-6D28D9" alt="GPL-3.0-only" /></a>
+</p>
 
-## 主要功能
+<p align="center">
+  <a href="#安装与开始使用">开始使用</a> ·
+  <a href="#开发构建">源码构建</a> ·
+  <a href="CONTRIBUTING.md">参与贡献</a> ·
+  <a href="https://github.com/AYssu/vkyra/issues/new/choose">反馈问题</a>
+</p>
 
-- Sora 编辑器与 TextMate 高亮：C/C++、JSON、Makefile，支持多文档、搜索替换、括号匹配和缩进引导线。
-- Clang/clangd：编译、格式化、诊断、补全及代码导航；项目自己的编译数据库优先。
-- 项目文件操作、Git 仓库操作、终端与自定义编译命令。
-- 文档草稿恢复、事务式工具链与插件安装、APK 导出和签名。
+<img align="right" src="docs/assets/brand/mascot.png" alt="戴眼镜和紫色耳机、抱着电脑打招呼的 Vkyra Q 版看板娘" width="24%" />
 
-当前编辑器没有点击箭头收起函数或代码块的交互式折叠。插件和终端命令能执行代码，应只运行自己信任的内容。内置更新默认不绑定任何仓库；发布者配置仓库后才会请求更新。
+Vkyra 是一款面向 Android 的开源 C/C++ 开发环境，将代码编辑、Clang 工具链、终端和项目管理放在一起。从写下第一段程序，到编译运行、管理 Git 变更，都可以在手机上完成。
 
-## 安装
+### 从编辑到运行
 
-普通 ARM64 手机选择 `aarch64` 安装包，x86_64 模拟器选择 `x86_64`。仓库的 Actions 构建产物是开发测试包；正式发布包以维护者在 Releases 中说明的签名和校验值为准。
+- **专注写代码**：Sora 编辑器、TextMate 高亮、多文档、搜索替换、括号匹配和缩进引导线。
+- **让 Clang 提供支持**：clangd 补全、诊断与代码导航，配合编译和格式化，优先使用项目自己的编译数据库。
+- **掌握开发流程**：项目文件操作、Git、终端、自定义编译命令，以及插件和 APK 导出签名。
+- **接着上次的工作**：文档草稿恢复；工具链和插件采用事务式安装。
 
-首次运行时按应用提示安装内置工具链。
+<br clear="right" />
+
+## 安装与开始使用
+
+支持 **Android 8.0（API 26）及以上**，应用包名为 `com.vkyra.code`。
+
+| 安装包 | 适用设备 |
+| --- | --- |
+| `aarch64` | 普通 ARM64 Android 手机和平板 |
+| `x86_64` | 对应架构设备与 Android 模拟器 |
+
+1. 在 [Releases](https://github.com/AYssu/vkyra/releases) 查看正式发布；需要测试主分支时，前往 [Actions](https://github.com/AYssu/vkyra/actions/workflows/ci.yml) 的成功运行下载构建产物。
+2. 安装对应架构的 APK，首次打开时按提示安装内置工具链。
+3. 创建或打开项目，编辑 C/C++ 文件，编译并运行。
+
+Actions 产物是开发测试包，下载通常需要登录 GitHub。正式发布包以对应发布说明中的签名和校验值为准。
+
+<details>
+<summary>当前能力与使用说明</summary>
+
+- 当前没有点击箭头收起函数或代码块的交互式折叠。
+- 插件和终端命令能执行代码，请只运行自己信任的内容。
+- 内置更新默认不绑定任何仓库；发布者配置仓库后才会请求更新。
+
+</details>
 
 ## 开发构建
 
@@ -35,11 +73,11 @@ Vkyra 是面向 Android 的 C/C++ 开发环境，提供代码编辑、clangd 语
 
 ### 获取源码
 
-先安装 Git LFS。Debian / Ubuntu 可使用 `sudo apt-get install git-lfs`。从仓库页面复制 clone 地址后执行：
+先安装 Git LFS。Debian / Ubuntu 可使用 `sudo apt-get install git-lfs`，然后获取源码与工具链资源：
 
 ```bash
 git lfs install
-git clone <仓库的克隆地址> vkyra
+git clone https://github.com/AYssu/vkyra.git
 cd vkyra
 git lfs pull
 git lfs fsck
@@ -47,7 +85,7 @@ git lfs fsck
 
 ### 构建 APK
 
-请用 Android Studio 的 SDK Manager 安装 Android SDK Platform 37 与 NDK `28.2.13676358`，设置本机 `ANDROID_HOME`，或在忽略的 `local.properties` 中填写 `sdk.dir`。Linux 主机上的完整测试还需要可执行的 `clangd`；构建应用本身不使用主机 clangd。
+请用 Android Studio 的 SDK Manager 安装 Android SDK Platform 37（SDK 包名 `platforms;android-37.0`）与 NDK `28.2.13676358`，设置本机 `ANDROID_HOME`，或在忽略的 `local.properties` 中填写 `sdk.dir`。Linux 主机上的完整测试还需要可执行的 `clangd`；构建应用本身不使用主机 clangd。
 
 ```bash
 ./gradlew :app:assembleAarch64Debug :app:assembleX86_64Debug
