@@ -121,8 +121,9 @@ public class EditorCustomCommandRegressionTest {
                     // Actual Activity destruction triggers the shared command owner's ON_DESTROY path.
                     scenario.close();
                 }
-                // Release the workers only AFTER actual Activity destruction. A fixed sleep
-                // could expire before destruction under a loaded emulator and prove nothing.
+                // Destruction requests non-blocking cancellation. Keep the gate closed
+                // until the workers have reaped their processes, off the main thread.
+                awaitCommandWorkersStopped();
                 Files.write(new File(fixture.project,"release-command-gate").toPath(),new byte[]{1});
                 Thread.sleep(1000);
                 fixture.instrumentation.waitForIdleSync();
@@ -212,6 +213,18 @@ public class EditorCustomCommandRegressionTest {
         long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(10);
         while (!file.exists() && System.nanoTime() < deadline) Thread.sleep(10);
         assertTrue("Shell never created " + file, file.exists());
+    }
+
+    private static void awaitCommandWorkersStopped() throws Exception {
+        Field field = com.vkyra.code.toolchain.CustomCommandTask.class.getDeclaredField("WORKERS");
+        field.setAccessible(true);
+        java.util.concurrent.ThreadPoolExecutor workers = (java.util.concurrent.ThreadPoolExecutor) field.get(null);
+        long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(10);
+        while ((workers.getActiveCount() != 0 || !workers.getQueue().isEmpty()) && System.nanoTime() < deadline) {
+            Thread.sleep(10);
+        }
+        assertEquals("Destroyed editor's commands must finish process cleanup", 0, workers.getActiveCount());
+        assertTrue("Destroyed editor's commands must leave no queued work", workers.getQueue().isEmpty());
     }
 
     private static Object get(Object owner, String name) {
