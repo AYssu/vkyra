@@ -32,8 +32,26 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ inputs.ref || github.ref }}
-          lfs: true
+          lfs: false
           persist-credentials: false
+      - name: Restore bundled toolchain LFS objects
+        id: lfs-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: .git/lfs/objects
+          key: ${{ runner.os }}-${{ runner.arch }}-vkyra-lfs-v1-${{ hashFiles('app/src/**/assets/*.tar.xz', 'app/src/main/assets/demo.apk') }}
+      - name: Materialize and verify LFS resources
+        env:
+          GIT_TERMINAL_PROMPT: '0'
+        run: |
+          git lfs pull
+          git lfs fsck
+      - name: Save verified toolchain LFS objects
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.lfs-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: .git/lfs/objects
+          key: ${{ steps.lfs-cache.outputs.cache-primary-key }}
       - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6
         with:
           distribution: temurin
@@ -51,8 +69,38 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install --no-install-recommends -y clangd
           echo "VKYRA_HOST_CLANGD=$(command -v clangd)" >> "$GITHUB_ENV"
+      - name: Locate SDK and cache generation
+        id: sdk
+        run: |
+          sdk_root="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
+          test -n "$sdk_root"
+          echo "root=$sdk_root" >> "$GITHUB_OUTPUT"
+          echo "epoch=$(date -u +%Y-%m)" >> "$GITHUB_OUTPUT"
+      - name: Restore Android build SDK
+        id: sdk-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: |
+            ${{ steps.sdk.outputs.root }}/platform-tools
+            ${{ steps.sdk.outputs.root }}/platforms/android-37.0
+            ${{ steps.sdk.outputs.root }}/build-tools/36.0.0
+            ${{ steps.sdk.outputs.root }}/ndk/28.2.13676358
+            ${{ steps.sdk.outputs.root }}/licenses
+          key: ${{ runner.os }}-${{ runner.arch }}-vkyra-sdk-v1-${{ steps.sdk.outputs.epoch }}-${{ hashFiles('scripts/ci/install-sdk.sh', 'gradle.properties') }}
       - name: Install the pinned Android SDK and NDK
+        if: steps.sdk-cache.outputs.cache-hit != 'true'
         run: bash scripts/ci/install-sdk.sh build
+      - name: Save Android build SDK
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.sdk-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: |
+            ${{ steps.sdk.outputs.root }}/platform-tools
+            ${{ steps.sdk.outputs.root }}/platforms/android-37.0
+            ${{ steps.sdk.outputs.root }}/build-tools/36.0.0
+            ${{ steps.sdk.outputs.root }}/ndk/28.2.13676358
+            ${{ steps.sdk.outputs.root }}/licenses
+          key: ${{ steps.sdk-cache.outputs.cache-primary-key }}
       - name: Verify source, licenses, JVM tests, lint and both ABI builds
         run: bash scripts/ci/verify.sh
       - name: Upload exact device-test inputs
@@ -105,8 +153,41 @@ jobs:
         with:
           name: android-test-inputs
           path: build/ci-inputs
+      - name: Locate SDK and cache generation
+        id: sdk
+        env:
+          API: ${{ matrix.api }}
+        run: |
+          sdk_root="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
+          test -n "$sdk_root"
+          image_api="$API"
+          if [[ "$API" == 37 ]]; then image_api=37.0; fi
+          echo "root=$sdk_root" >> "$GITHUB_OUTPUT"
+          echo "image_api=$image_api" >> "$GITHUB_OUTPUT"
+          echo "epoch=$(date -u +%Y-%m)" >> "$GITHUB_OUTPUT"
+      - name: Restore dedicated emulator SDK
+        id: sdk-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: |
+            ${{ steps.sdk.outputs.root }}/platform-tools
+            ${{ steps.sdk.outputs.root }}/emulator
+            ${{ steps.sdk.outputs.root }}/system-images/android-${{ steps.sdk.outputs.image_api }}/default/x86_64
+            ${{ steps.sdk.outputs.root }}/licenses
+          key: ${{ runner.os }}-${{ runner.arch }}-vkyra-emulator-${{ matrix.api }}-v1-${{ steps.sdk.outputs.epoch }}-${{ hashFiles('scripts/ci/install-sdk.sh') }}
       - name: Install dedicated emulator image
+        if: steps.sdk-cache.outputs.cache-hit != 'true'
         run: bash scripts/ci/install-sdk.sh '${{ matrix.api }}'
+      - name: Save dedicated emulator SDK
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.sdk-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: |
+            ${{ steps.sdk.outputs.root }}/platform-tools
+            ${{ steps.sdk.outputs.root }}/emulator
+            ${{ steps.sdk.outputs.root }}/system-images/android-${{ steps.sdk.outputs.image_api }}/default/x86_64
+            ${{ steps.sdk.outputs.root }}/licenses
+          key: ${{ steps.sdk-cache.outputs.cache-primary-key }}
       - name: Full Android regression and real R8 release smoke
         run: bash scripts/ci/run-emulator.sh '${{ matrix.api }}'
       - name: Upload actual device evidence

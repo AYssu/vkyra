@@ -2,7 +2,8 @@
 """Configure review and CI protection after the first successful remote CI run.
 
 Requires authenticated gh and repository admin access. Preview with --dry-run.
-Existing required checks/reviewer counts/restrictions are preserved or strengthened.
+Existing checks/reviewer counts/restrictions are preserved or strengthened.
+Administrator bypass is disabled unless explicitly requested.
 """
 import argparse
 import json
@@ -14,6 +15,8 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('repository', help='OWNER/REPOSITORY')
 parser.add_argument('--branch', default='main')
 parser.add_argument('--dry-run', action='store_true')
+parser.add_argument('--allow-admin-bypass', action='store_true', help='Explicitly allow repository administrators to bypass main protection (single-maintainer repositories).')
+parser.add_argument('--require-code-owner-reviews', action='store_true', help='Require approval from the actual maintainers listed in .github/CODEOWNERS.')
 args = parser.parse_args()
 if not re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+', args.repository):
     parser.error('Use OWNER/REPOSITORY')
@@ -50,7 +53,7 @@ required_checks['CI required'] = {'context': 'CI required', 'app_id': checks[0][
 review = previous.get('required_pull_request_reviews') or {}
 reviews = {
     'dismiss_stale_reviews': True,
-    'require_code_owner_reviews': review.get('require_code_owner_reviews', False),
+    'require_code_owner_reviews': args.require_code_owner_reviews or review.get('require_code_owner_reviews', False),
     'required_approving_review_count': max(1, review.get('required_approving_review_count', 0)),
     'require_last_push_approval': review.get('require_last_push_approval', False),
 }
@@ -64,7 +67,7 @@ if restrictions is not None:
                     'apps': [item['slug'] for item in restrictions.get('apps', [])]}
 payload = {
     'required_status_checks': {'strict': True, 'checks': list(required_checks.values())},
-    'enforce_admins': True,
+    'enforce_admins': not args.allow_admin_bypass,
     'required_pull_request_reviews': reviews,
     'restrictions': restrictions,
     'required_conversation_resolution': True,
@@ -81,4 +84,5 @@ if args.dry_run:
 else:
     api(branch_path + '/protection', method='PUT', body=payload)
     api(repo_path, method='PATCH', body={'has_issues': True, 'delete_branch_on_merge': True})
-    print(f'{args.repository}:{args.branch} now requires an up-to-date passing CI and PR review, including admins. Configure real CODEOWNERS separately if only designated maintainers may approve.')
+    scope = 'administrators may bypass by explicit request' if args.allow_admin_bypass else 'administrators must also comply'
+    print(f'{args.repository}:{args.branch} now requires an up-to-date passing CI and PR review; {scope}.')

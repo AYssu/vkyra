@@ -51,6 +51,7 @@ if '--install' in sys.argv and os.environ.get('SDK_TEST_FAIL') == '1':
                 self.assertEqual(0, result.returncode, result.stderr)
                 self.assertIn(f'system-images;android-{package_api};default;x86_64', calls[1])
                 self.assertIn('emulator', calls[1])
+                self.assertFalse(any(value.startswith(('ndk;', 'platforms;', 'build-tools;')) for value in calls[1]))
 
     def test_install_errors_remain_failures(self):
         result, _ = self.invoke('build', fail_install=True)

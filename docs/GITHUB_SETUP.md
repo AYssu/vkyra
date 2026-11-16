@@ -38,6 +38,14 @@ git push -u origin main
 
 Fork PR 不需要发行密钥，不能得到发布权限。维护者应审查第一次贡献或工作流变更后再批准受限制的外部工作流执行，不要在 `pull_request_target` 中直接运行外部分支代码和 secrets。
 
+### 缓存与重复下载
+
+Gradle Wrapper、依赖与转换结果由 `setup-gradle` 缓存。主机 job 另缓存 Git LFS 对象和构建用 SDK/NDK；三个模拟器 job 分别缓存 emulator、platform-tools 与对应系统镜像，不安装构建用 NDK。命中 SDK 缓存时跳过安装，LFS 命中后仍执行对象完整性检查。
+
+SDK 缓存按操作系统、CPU 架构、安装脚本和月份区分；构建 SDK 另包含 Gradle 属性，模拟器另包含 API。LFS key 取工具链与模板的指针文件内容，资产更新后重新缓存。首次运行、每月 SDK 缓存刷新、依赖调整或缓存被回收时仍需要下载。修改安装组件时同步修改缓存路径；手动刷新可删除相应 GitHub Actions cache。
+
+只有 `main` 的 push 检查写入新增的共享缓存，PR 只读取；不缓存签名密钥、凭据、AVD 用户数据或测试结果。缓存用于减少下载，所有测试仍然执行。模拟器任务使用同一主机 job 上传的准确 APK 输入，不把旧构建产物当作验证结果。
+
 `release-smoke` 自带 AndroidX Test/Kotlin 测试运行时，复用原有 `ReleaseSmokeTest.java`，不作为目标应用的依赖，也不随正式 APK 发布。这使测试框架不依赖 R8 已改名的目标库，生产优化保持启用。Debug 的完整 suite 和 Release 的两个黑盒用例是两条独立的验证路径。
 
 当前自动验证仍有边界：x86_64 不能证明 ARM64 运行正常，正常权限路径不能证明真实拒权恢复，非 Root AVD 不能证明 Root 文件操作，模拟器也不能替代真实输入法、设备厂商行为和全部插件组合。影响这些边界的 PR 需要额外证据。
@@ -90,7 +98,16 @@ python3 scripts/github/configure-repository.py OWNER/REPO --branch main --dry-ru
 python3 scripts/github/configure-repository.py OWNER/REPO --branch main
 ```
 
-脚本保留或加强现有 required checks、审核人数和分支限制，要求管理员也遵守 PR 审核与最新 CI，通过后才允许合并，禁止强推和删分支，并启用 Issues 与合并后删除功能分支。它不会猜测谁是审核者：将 [CODEOWNERS 示例](../.github/CODEOWNERS.example) 的账号替换为有权限的真实维护者后，作为 `.github/CODEOWNERS` 提交，再在设置中开启 code owner 审查要求。私密漏洞报告与 `release` environment 仍需单独配置。以上是管理员操作说明，文件和命令存在不代表远端设置已经执行或生效。
+脚本保留或加强现有 required checks、审核人数和分支限制，默认要求管理员也遵守 PR 审核与最新 CI，禁止强推和删分支，并启用 Issues 与合并后删除功能分支。Vkyra 的 [CODEOWNERS](../.github/CODEOWNERS) 指定维护者 `@AYssu`；Fork 后应改成自己的真实维护者账号。
+
+对于当前单维护者仓库，维护者选择保留管理员绕过权限，其他贡献者仍须通过 PR、成功 CI 和 code owner 审核。复用该选择时需显式传入以下选项：
+
+```bash
+python3 scripts/github/configure-repository.py OWNER/REPO --dry-run --allow-admin-bypass --require-code-owner-reviews
+python3 scripts/github/configure-repository.py OWNER/REPO --allow-admin-bypass --require-code-owner-reviews
+```
+
+`--allow-admin-bypass` 适用于仓库管理员角色，不应把管理员权限授予普通贡献者；其他 required checks 和审查要求仍保留。私密漏洞报告与 `release` environment 分别配置。文件和命令存在不代表远端设置已经执行或生效，实际状态以 GitHub Settings/API 为准。
 
 只有一名维护者时需明确处理本人 PR：作者不能批准自己的 PR。可以增加可信审核者；若选择保留管理员紧急绕过权限，需记录使用理由和检查结果，不要为一次合并长期关闭 CI 门禁。GitHub 的套餐和仓库可见性可能影响保护能力，管理员应在页面确认功能可用。
 
