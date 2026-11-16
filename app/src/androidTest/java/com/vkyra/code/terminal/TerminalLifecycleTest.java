@@ -19,6 +19,88 @@ import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class TerminalLifecycleTest {
+    @Test public void shortLivedProcessKeepsItsTrailingOutputWhenTheMainThreadIsBusy() throws Exception {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        AtomicReference<TerminalSessionViewModel> owner = new AtomicReference<>();
+        AtomicReference<TerminalSession> session = new AtomicReference<>();
+        String marker = "VKYRA_TRAILING_PTY_OUTPUT";
+        try {
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
+                owner.set(new TerminalSessionViewModel());
+                TerminalSession started = new TerminalSession("/system/bin/sh", context.getCacheDir().getPath(),
+                        new String[]{"sh", "-c", "printf '%010000d%s\\n' 0 " + marker},
+                        new String[]{"PATH=/system/bin", "TERM=xterm-256color"}, 1000, owner.get());
+                session.set(started);
+                started.initializeEmulator(80, 24);
+                owner.get().own(started, false, "su -c");
+                // Let the child exit while its reader is back-pressured by a busy UI thread.
+                android.os.SystemClock.sleep(500);
+            });
+            long deadline = System.nanoTime() + 10_000_000_000L;
+            AtomicReference<String> transcript = new AtomicReference<>("");
+            do {
+                InstrumentationRegistry.getInstrumentation().runOnMainSync(() ->
+                        transcript.set(session.get().getEmulator().getScreen().getTranscriptText()));
+                if (!session.get().isRunning()) break;
+                Thread.sleep(10);
+            } while (System.nanoTime() < deadline);
+            assertFalse("short-lived command must finish", session.get().isRunning());
+            assertEquals(0, session.get().getExitStatus());
+            assertTrue("PTY output must be drained before appending the exit message; last screen: "
+                    + transcript.get().substring(Math.max(0, transcript.get().length() - 300)),
+                    transcript.get().contains(marker));
+        } finally {
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
+                if (owner.get() != null) owner.get().closeSession();
+            });
+        }
+    }
+
+    @Test public void closingReapedSessionDoesNotSignalAnotherProcessWhileOutputIsDraining() throws Exception {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        AtomicReference<TerminalSessionViewModel> firstOwner = new AtomicReference<>();
+        AtomicReference<TerminalSessionViewModel> otherOwner = new AtomicReference<>();
+        AtomicReference<TerminalSession> other = new AtomicReference<>();
+        java.lang.reflect.Field pid = TerminalSession.class.getDeclaredField("mShellPid");
+        java.lang.reflect.Field exited = TerminalSession.class.getDeclaredField("mShellProcessExited");
+        pid.setAccessible(true);
+        exited.setAccessible(true);
+        try {
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
+                firstOwner.set(new TerminalSessionViewModel());
+                otherOwner.set(new TerminalSessionViewModel());
+                other.set(start(context, otherOwner.get()));
+                TerminalSession first = new TerminalSession("/system/bin/sh", context.getCacheDir().getPath(),
+                        new String[]{"sh", "-c", "printf '%010000d' 0"},
+                        new String[]{"PATH=/system/bin", "TERM=xterm-256color"}, 1000, firstOwner.get());
+                first.initializeEmulator(80, 24);
+                firstOwner.get().own(first, false, "su -c");
+                int originalPid = first.getPid();
+                try {
+                    // Keep output queued while the waiter reaps the child, then model PID reuse
+                    // with another process owned solely by this test (never a shared device PID).
+                    long deadline = System.nanoTime() + 2_000_000_000L;
+                    while (!exited.getBoolean(first) && System.nanoTime() < deadline) android.os.SystemClock.sleep(10);
+                    assertTrue("the child must have exited before checking cancellation", exited.getBoolean(first));
+                    assertTrue("display completion must still wait for trailing output", first.isRunning());
+                    pid.setInt(first, other.get().getPid());
+                    first.finishIfRunning();
+                } catch (IllegalAccessException error) { throw new AssertionError(error); }
+                finally {
+                    try { pid.setInt(first, originalPid); }
+                    catch (IllegalAccessException error) { throw new AssertionError(error); }
+                }
+            });
+            Thread.sleep(100);
+            assertNotNull("closing a reaped session must not signal a reused PID", ProcessOwnership.read(other.get().getPid()));
+        } finally {
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(() -> {
+                if (firstOwner.get() != null) firstOwner.get().closeSession();
+                if (otherOwner.get() != null) otherOwner.get().closeSession();
+            });
+        }
+    }
+
     @Test public void recreationKeepsTheSameShellAndItsEnvironment() throws Exception {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         File marker = File.createTempFile("vkyra-terminal-state", ".txt", context.getCacheDir());

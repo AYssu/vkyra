@@ -1348,38 +1348,44 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity", "Expected Clang version: " + expectedVersion);
             Log.d("MainActivity", "Installed Clang version: " + installedVersion);
             
-            runOnUiThread(() -> {
-                if (expectedVersion != null && installedVersion != null && expectedVersion.equals(installedVersion)) {
-                    // 版本匹配
-                    isClangInstalled = true;
-                    setUIEnabled(true);
-                    
-                    if (gccStatusIndicator != null) {
-                        gccStatusIndicator.setBackgroundResource(R.drawable.status_dot_green);
-                    }
-                    if (gccStatusText != null) {
-                        gccStatusText.setText("已就绪");
-                        gccStatusText.setTextColor(0xFF4EC9B0);
-                    }
-                } else {
-                    // 版本不匹配，提示重新安装
-                    isClangInstalled = false;
-                    setUIEnabled(false);
-                    
-                    if (gccStatusIndicator != null) {
-                        gccStatusIndicator.setBackgroundResource(R.drawable.status_dot_yellow);
-                    }
-                    if (gccStatusText != null) {
-                        gccStatusText.setText("版本不匹配");
-                        gccStatusText.setTextColor(0xFFDCDCAA);
-                    }
-                    
-                    showClangVersionMismatchDialog(expectedVersion, installedVersion);
-                }
-            });
+            runOnUiThread(() -> applyClangVersionResult(gccStatusIndicator, gccStatusText,
+                    expectedVersion, installedVersion));
         }).start();
     }
-    
+
+    private void applyClangVersionResult(View gccStatusIndicator, TextView gccStatusText,
+                                         String expectedVersion, String installedVersion) {
+        // The background check can finish after navigation or Activity recreation.
+        if (isFinishing() || isDestroyed()) return;
+        if (expectedVersion != null && installedVersion != null && expectedVersion.equals(installedVersion)) {
+            // 版本匹配
+            isClangInstalled = true;
+            setUIEnabled(true);
+
+            if (gccStatusIndicator != null) {
+                gccStatusIndicator.setBackgroundResource(R.drawable.status_dot_green);
+            }
+            if (gccStatusText != null) {
+                gccStatusText.setText("已就绪");
+                gccStatusText.setTextColor(0xFF4EC9B0);
+            }
+        } else {
+            // 版本不匹配，提示重新安装
+            isClangInstalled = false;
+            setUIEnabled(false);
+
+            if (gccStatusIndicator != null) {
+                gccStatusIndicator.setBackgroundResource(R.drawable.status_dot_yellow);
+            }
+            if (gccStatusText != null) {
+                gccStatusText.setText("版本不匹配");
+                gccStatusText.setTextColor(0xFFDCDCAA);
+            }
+
+            showClangVersionMismatchDialog(expectedVersion, installedVersion);
+        }
+    }
+
     private void showClangVersionMismatchDialog(String expectedVersion, String installedVersion) {
         String message = "检测到 Clang 编译器版本不匹配，需要重新安装。\n\n" +
                         "期望版本:\n" + (expectedVersion != null ? expectedVersion : "未知") + "\n\n" +

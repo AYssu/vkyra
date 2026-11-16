@@ -16,6 +16,8 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A terminal session, consisting of a process coupled to a terminal interface.
@@ -55,6 +57,9 @@ public final class TerminalSession extends TerminalOutput {
 
     /** The pid of the shell process. 0 if not started and -1 if finished running. */
     int mShellPid;
+
+    /** The child has been reaped, even if its final output is still being displayed. */
+    private volatile boolean mShellProcessExited;
 
     /** The exit status of the shell process. Only valid if ${@link #mShellPid} is -1. */
     int mShellExitStatus;
@@ -128,6 +133,7 @@ public final class TerminalSession extends TerminalOutput {
         mShellPid = processId[0];
 
         final FileDescriptor terminalFileDescriptorWrapped = wrapFileDescriptor(mTerminalFileDescriptor, mClient);
+        final CountDownLatch outputDrained = new CountDownLatch(1);
 
         new Thread("TermSessionInputReader[pid=" + mShellPid + "]") {
             @Override
@@ -142,6 +148,8 @@ public final class TerminalSession extends TerminalOutput {
                     }
                 } catch (Exception e) {
                     // Ignore, just shutting down.
+                } finally {
+                    outputDrained.countDown();
                 }
             }
         }.start();
@@ -166,6 +174,12 @@ public final class TerminalSession extends TerminalOutput {
             @Override
             public void run() {
                 int processExitCode = JNI.waitFor(mShellPid);
+                mShellProcessExited = true;
+                // A fast child can exit before its reader has delivered the last PTY
+                // bytes. Let the UI drain the queue before posting the exit message.
+                // Bound this wait because descendants may keep the slave PTY open.
+                try { outputDrained.await(3, TimeUnit.SECONDS); }
+                catch (InterruptedException interrupted) { Thread.currentThread().interrupt(); }
                 mMainThreadHandler.sendMessage(mMainThreadHandler.obtainMessage(MSG_PROCESS_EXITED, processExitCode));
             }
         }.start();
@@ -232,7 +246,7 @@ public final class TerminalSession extends TerminalOutput {
 
     /** Finish this terminal session by sending SIGKILL to the shell. */
     public void finishIfRunning() {
-        if (isRunning()) {
+        if (isRunning() && !mShellProcessExited) {
             try {
                 Os.kill(mShellPid, OsConstants.SIGKILL);
             } catch (ErrnoException e) {
