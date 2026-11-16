@@ -20,6 +20,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
@@ -95,10 +96,10 @@ public class GitNetworkResponsivenessTest {
                     assertFalse(operation.isDone());
                 } finally { release.countDown(); }
                 operation.get(10, TimeUnit.SECONDS);
-                await(scenario, a -> !a.getWindow().getDecorView().hasWindowFocus(),
-                        "Git dialog never opened after network release");
-                onView(withText("Git 操作")).check(matches(isDisplayed()));
-                onView(withText("关闭")).perform(click());
+                // The dialog opens asynchronously. Match its window explicitly rather than
+                // waiting on the underlying editor window, which loses focus to the dialog.
+                onView(withText("Git 操作")).inRoot(isDialog()).check(matches(isDisplayed()));
+                onView(withText("关闭")).inRoot(isDialog()).perform(click());
             } finally {
                 release.countDown();
                 if (manager.get() != null) manager.get().close();
