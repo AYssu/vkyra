@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="项目路径: /storage/emulated/0/Akode/"
+                android:text="@string/new_project_path_hint"
                 android:textColor="#9E9E9E"
                 android:textSize="12sp" />
 

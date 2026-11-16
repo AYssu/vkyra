@@ -36,6 +36,13 @@ public class UpdateReleaseSelectorTest {
                 + release("v1.9.0", false, false, "app_aarch64.apk") + "]";
         assertEquals("1.9.0", UpdateReleaseSelector.select(json, "arm64-v8a").version);
     }
+    @Test public void datedVersionsRetainDisplayZerosAndCompareAcrossDays() throws Exception {
+        assertTrue(UpdateReleaseSelector.version("0.1.01117").compareToIgnoreBuildMetadata(
+                UpdateReleaseSelector.version("0.1.01116")) > 0);
+        String json = "[" + release("v0.1.01116", false, false, "app_aarch64.apk") + ","
+                + release("v0.1.01117", false, false, "app_aarch64.apk") + "]";
+        assertEquals("0.1.01117", UpdateReleaseSelector.select(json, "arm64-v8a").version);
+    }
     @Test public void rejectsNonHttpsAndCredentialUrls() {
         assertFalse(UpdateReleaseSelector.isSecureUrl("http://example.com/app.apk"));
         assertFalse(UpdateReleaseSelector.isSecureUrl("https://user:token@example.com/app.apk"));

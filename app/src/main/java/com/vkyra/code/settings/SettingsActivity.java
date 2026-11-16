@@ -413,7 +413,7 @@ public class SettingsActivity extends AppCompatActivity {
         
         private void openGitHubRepository() {
             try {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/AYssu/AkodeIDE"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/AYssu/vkyra"));
                 startActivity(intent);
             } catch (Exception e) {
                 Toast.makeText(getContext(), "无法打开页面", Toast.LENGTH_SHORT).show();
@@ -451,7 +451,7 @@ public class SettingsActivity extends AppCompatActivity {
             layout.addView(hint);
             
             new MaterialAlertDialogBuilder(getContext())
-                .setTitle("Akode C++ IDE 官方群")
+                .setTitle("Vkyra C/C++ IDE 官方群")
                 .setView(layout)
                 .setPositiveButton("打开链接", (d, w) -> {
                     try {

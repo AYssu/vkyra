@@ -302,7 +302,7 @@ public class NewProjectActivity extends AppCompatActivity {
     
     private void createReadme(File projectDir, String projectName) {
         try {
-            String readme = "# " + projectName + "\n\n## 简介\n\n这是一个使用 Akode IDE 创建的项目。\n\n## 编译\n\n使用 Akode IDE 打开项目并编译运行。\n";
+            String readme = "# " + projectName + "\n\n## 简介\n\n这是一个使用 Vkyra IDE 创建的项目。\n\n## 编译\n\n使用 Vkyra IDE 打开项目并编译运行。\n";
             writeFile(new File(projectDir, "README.md"), readme);
         } catch (IOException e) {
             e.printStackTrace();
@@ -324,8 +324,8 @@ public class NewProjectActivity extends AppCompatActivity {
             
             // 设置用户信息
             try {
-                git.getRepository().getConfig().setString("user", null, "name", "Akode User");
-                git.getRepository().getConfig().setString("user", null, "email", "user@akode.local");
+                git.getRepository().getConfig().setString("user", null, "name", "Vkyra User");
+                git.getRepository().getConfig().setString("user", null, "email", "user@vkyra.local");
                 git.getRepository().getConfig().save();
             } catch (Exception configEx) {
                 configEx.printStackTrace();

@@ -18,7 +18,7 @@ parser.add_argument('--tag', required=True)
 parser.add_argument('--commit', required=True)
 args = parser.parse_args()
 if not re.fullmatch(r'v\d+\.\d+\.\d+(?:[-+][A-Za-z0-9.-]+)?', args.tag):
-    raise SystemExit('Expected a version tag such as v1.1.2')
+    raise SystemExit('Expected a version tag such as v0.1.01116')
 required = ('VKYRA_KEYSTORE_BASE64', 'VKYRA_KEYSTORE_PASSWORD', 'VKYRA_KEY_ALIAS', 'VKYRA_KEY_PASSWORD')
 missing = [key for key in required if not os.environ.get(key)]
 if missing:

@@ -26,7 +26,7 @@ public class ZshInstaller {
     private static final String TAG = "ZshInstaller";
     private static final String INSTALL_MARKER = ".zsh_installed";
     private static final String ZSHRC_VERSION_FILE = ".zshrc_version";
-    private static final String CURRENT_ZSHRC_VERSION = "1.6"; // .zshrc 配置版本，修改配置时递增
+    private static final String CURRENT_ZSHRC_VERSION = "1.7"; // .zshrc 配置版本，修改配置时递增
     
     // 架构相关常量
     private static final String ARCH_ARM64 = "arm64-v8a";
@@ -251,7 +251,7 @@ public class ZshInstaller {
 
     private static void writeZshrcConfig(File destination) throws IOException {
         StringBuilder config = new StringBuilder();
-        config.append("# Akode Zsh Config\n");
+        config.append("# Vkyra Zsh Config\n");
         config.append("# Version: ").append(CURRENT_ZSHRC_VERSION).append("\n\n");
 
         config.append("# 环境变量\n");
@@ -270,9 +270,9 @@ public class ZshInstaller {
         
         config.append("# PS1 提示符 (路径只显示最后3级，超出显示...)\n");
         config.append("if [[ $UID -eq 0 ]]; then\n");
-        config.append("  PS1='%F{red}root@akode%f in %F{blue}%(4~|.../%3~|%~)%f# '\n");
+        config.append("  PS1='%F{red}root@vkyra%f in %F{blue}%(4~|.../%3~|%~)%f# '\n");
         config.append("else\n");
-        config.append("  PS1='%F{green}user@akode%f in %F{blue}%(4~|.../%3~|%~)%f$ '\n");
+        config.append("  PS1='%F{green}user@vkyra%f in %F{blue}%(4~|.../%3~|%~)%f$ '\n");
         config.append("fi\n\n");
         
         config.append("# ls 颜色\n");

@@ -1082,15 +1082,15 @@ public class MainActivity extends AppCompatActivity {
         String projectName = customName.isEmpty() ? projectDir.getName() : customName;
         
         try {
-            // 检查是否已经是Akode项目
+            // 检查是否已经是Vkyra项目
             if (RecentProjectManager.isAkodeProject(projectDir)) {
-                // 已经是Akode项目，直接添加到最近项目
+                // 已经是Vkyra项目，直接添加到最近项目
                 RecentProjectManager.updateLastOpenTime(projectPath);
                 // 添加到全局项目列表
                 RecentProjectManager.addToGlobalProjects(this, projectPath);
                 Toast.makeText(this, "项目导入成功", Toast.LENGTH_SHORT).show();
             } else {
-                // 初始化为Akode项目
+                // 初始化为Vkyra项目
                 RecentProjectManager.initProject(projectPath, projectName, "imported", null);
                 
                 // 创建third.json配置文件
@@ -1387,6 +1387,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showClangVersionMismatchDialog(String expectedVersion, String installedVersion) {
+        if (!ClangInstaller.hasBundledArchive(this)) {
+            ClangInstaller.showMissingArchiveDialog(this);
+            return;
+        }
         String message = "检测到 Clang 编译器版本不匹配，需要重新安装。\n\n" +
                         "期望版本:\n" + (expectedVersion != null ? expectedVersion : "未知") + "\n\n" +
                         "已安装版本:\n" + (installedVersion != null ? installedVersion : "未知");
@@ -1791,7 +1795,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            // 初始化为Akode项目
+            // 初始化为Vkyra项目
             RecentProjectManager.initProject(projectDir.getAbsolutePath(), projectName, "imported_uri", null);
 
             // 创建URI配置文件

@@ -4027,7 +4027,7 @@ public class EditorActivity extends AppCompatActivity {
         
         // 只有在非编辑器模式下才自动检测项目
         if (!isEditorMode) {
-            // 检测是否进入了 Akode 项目目录
+            // 检测是否进入了 Vkyra 项目目录
             if (RecentProjectManager.isAkodeProject(dir)) {
                 // 自动切换到项目模式
                 if (currentProjectPath == null || !currentProjectPath.equals(path)) {

@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+apply from: rootProject.file('gradle/versioning.gradle')
+
 def signingProps = new Properties()
 def signingPropsFile = rootProject.file("keystore.properties")
 if (signingPropsFile.exists()) {
@@ -61,8 +63,8 @@ android {
         minSdk 26
         // Bundled executables require the existing target-28 execution model.
         targetSdk 28
-        versionCode 1000112
-        versionName '1.1.2'
+        versionCode vkyraVersionCode
+        versionName vkyraVersionName
         buildConfigField 'String', 'UPDATE_REPOSITORY', '"' + providers.gradleProperty('vkyra.updateRepository').getOrElse('').replace('\\', '\\\\').replace('"', '\\"') + '"'
         
         // 启用 multidex
@@ -84,7 +86,10 @@ android {
     
     // ABI-specific archives live in their flavor source sets; merge never deletes source assets.
     if (providers.gradleProperty('removeAllArchAssets').getOrElse('false').toBoolean()) {
-        sourceSets.configureEach { assets.exclude '**/*.tar.xz' }
+        // These two directories contain only bundled toolchain archives. Android's
+        // asset merger does not honor SourceDirectorySet.exclude for this input.
+        sourceSets.aarch64.assets.setSrcDirs([])
+        sourceSets.x86_64.assets.setSrcDirs([])
     }
 
     signingConfigs {

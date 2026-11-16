@@ -99,7 +99,7 @@ Debug 完整 suite 使用应用原始 instrumentation（`com.vkyra.code.test`）
 
 发布前检查：
 
-- `app/build.gradle` 的 `versionName` 符合 SemVer，`versionCode` 高于已发布版本。
+- `gradle/versioning.gradle` 按北京时间生成 `0.1.0MMdd` 显示版本和 `yyyyMMdd` 内部版本码；发布构建固定 `vkyraBuildDate`，确认 `versionCode` 高于已发布版本。日期后缀含前导零，是本项目显示约定。
 - 标签与版本一致，两个 ABI 的资源齐全；命名保留 `aarch64`/`arm64` 或 `x86_64`，让更新选择器识别。
 - 所有 required checks 通过，变化涉及的设备、拒权、离线、生命周期、旧数据与 Release 验证有证据。
 - 正式签名与已安装发行版兼容；APK 签名、包名、版本、校验值正确。
@@ -119,3 +119,7 @@ GitHub 自动化、管理员分支设置及签名配置见 [GitHub 设置手册]
 | Release 才崩溃 | 对应构建的 mapping、反射/JNI/序列化规则、资源收缩与实际签名包 |
 | clangd 有跳转但缺少语义补全 | 真实 PCH/临时文件错误、应用缓存可写性、编译参数，不要把词法候选当作语义结果 |
 | 更新检查没有网络请求 | 是否仍保持默认空仓库；配置格式、Release 标签、ABI 和 HTTPS 资源是否符合选择器要求 |
+
+## 品牌与旧数据兼容
+
+应用界面、默认新项目文案、日志文件、Git 默认作者和新建 shell 配置统一使用 Vkyra。保留 `.akode` 项目元数据、`akode_settings` 持久化偏好名和 `AkodeGitKey` Android Keystore 别名，避免重命名导致旧项目、符号栏配置或 Git 凭据不可读；用户已设置的项目路径和 `.zshrc` 不重写。旧默认 `/storage/emulated/0/Akode` 已存在时继续使用，新用户默认 `/storage/emulated/0/Vkyra`。许可证、第三方清单和上游来源中的 Akode 属于来源记录，不能当作应用品牌文案删除。

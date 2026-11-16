@@ -30,6 +30,12 @@ final class UpdateReleaseSelector {
         String text = value.trim();
         if (text.startsWith("v.")) text = text.substring(2);
         else if (text.startsWith("v") || text.startsWith("V")) text = text.substring(1);
+        // Display versions use 0.1.0MMdd. Normalize only that dated convention for
+        // the SemVer library; keep ordinary SemVer validation and precedence.
+        if (text.matches("\\d+\\.\\d+\\.0\\d{4}")) {
+            int separator = text.lastIndexOf('.');
+            text = text.substring(0, separator + 1) + Long.parseLong(text.substring(separator + 1));
+        }
         return Version.tryParse(text, false).orElseThrow(() -> new IllegalArgumentException("无效版本号"));
     }
 
@@ -49,7 +55,9 @@ final class UpdateReleaseSelector {
             Asset selected = selectAsset(release.assets, abi);
             if (selected == null) continue;
             best = candidate;
-            result = new VersionChecker.ReleaseInfo(candidate.toString(), release.body == null ? "" : release.body,
+            String display = release.tag_name.trim().replaceFirst("^[vV]\\.?", "");
+            if (!display.matches("\\d+\\.\\d+\\.0\\d{4}")) display = candidate.toString();
+            result = new VersionChecker.ReleaseInfo(display, release.body == null ? "" : release.body,
                     selected.browser_download_url);
         }
         return result;

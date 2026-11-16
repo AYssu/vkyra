@@ -42,7 +42,7 @@ Vkyra 是一款面向 Android 的开源 C/C++ 开发环境，将代码编辑、C
 | `aarch64` | 普通 ARM64 Android 手机和平板 |
 | `x86_64` | 对应架构设备与 Android 模拟器 |
 
-1. 在 [Releases](https://github.com/AYssu/vkyra/releases) 查看正式发布；需要测试主分支时，前往 [Debug APK](https://github.com/AYssu/vkyra/actions/workflows/debug.yml) 的成功运行，在 **Artifacts → vkyra-debug-apks** 下载测试包。
+1. 在 [Releases](https://github.com/AYssu/vkyra/releases) 查看正式发布；需要测试主分支时，前往 [Debug APK](https://github.com/AYssu/vkyra/actions/workflows/debug.yml) 的成功运行，在 **Artifacts** 按设备架构选择 `vkyra-debug-aarch64-full`、`vkyra-debug-aarch64-lite`、`vkyra-debug-x86_64-full` 或 `vkyra-debug-x86_64-lite`，分别下载测试包。
 2. 安装对应架构的 APK，首次打开时按提示安装内置工具链。
 3. 创建或打开项目，编辑 C/C++ 文件，编译并运行。
 
@@ -128,3 +128,7 @@ Debug 保持可读，Release 使用标准 R8 收缩和资源缩减。正式签�
 Vkyra 沿用 **GNU GPL v3 only（GPL-3.0-only）**。仓库保留 Termux 与其他组件的既有许可要求。请阅读 [LICENSE](LICENSE)、[许可说明](LICENSE.md) 和 [第三方声明](THIRD_PARTY_NOTICES.md)，以及各组件内的原始许可证；开源应用不意味着可以移除第三方版权声明。
 
 内置预编译工具由项目维护者编译提供，上游来源与许可见 [第三方声明](THIRD_PARTY_NOTICES.md) 和 [许可来源记录](licenses/SOURCES.json)。发行资料的维护要求见 [发行资料检查](distribution/README.md)。
+
+### 完整版与 Lite 测试包
+
+Debug APK 工作流提供四个独立下载项（ARM64 / x86_64 × Full / Lite）。首次安装或需要升级工具链时选 **Full**；已解压过当前版本工具链、只更新 IDE 时选 **Lite**。Lite 不含 Clang、build-tools、zsh 压缩包，保留已有应用数据；缺少或不匹配的工具链需用 Full 覆盖安装后补齐。两者包名、版本及开发签名相同，不能并存。每日版本按北京时间生成，例如 `0.1.01116` 表示基础版本 `0.1.0` 加 `1116`，Android 内部版本码使用完整 `yyyyMMdd` 避免跨年倒退。

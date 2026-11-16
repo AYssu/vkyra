@@ -12,6 +12,11 @@ on:
         required: false
         default: ''
         type: string
+      build-date:
+        description: Fixed Asia/Shanghai build date for reproducible dated release versions
+        required: false
+        type: string
+        default: ''
 
 permissions:
   contents: read
@@ -27,6 +32,7 @@ jobs:
     timeout-minutes: 45
     env:
       VKYRA_CI_EXPECTED_SHA: ${{ inputs.ref || github.sha }}
+      ORG_GRADLE_PROJECT_vkyraBuildDate: ${{ inputs.build-date }}
     steps:
       # All actions below are pinned to commits verified against their official tags.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -106,7 +112,12 @@ jobs:
             ${{ steps.sdk.outputs.root }}/licenses
           key: ${{ steps.sdk-cache.outputs.cache-primary-key }}
       - name: Verify source, licenses, JVM tests, lint and both ABI builds
-        run: bash scripts/ci/verify.sh
+        run: |
+          if [[ -z "$ORG_GRADLE_PROJECT_vkyraBuildDate" ]]; then
+            ORG_GRADLE_PROJECT_vkyraBuildDate="$(TZ=Asia/Shanghai date +%F)"
+          fi
+          export ORG_GRADLE_PROJECT_vkyraBuildDate
+          bash scripts/ci/verify.sh
       - name: Upload exact device-test inputs
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:

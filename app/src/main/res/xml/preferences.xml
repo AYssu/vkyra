@@ -193,7 +193,7 @@
         <Preference
             app:key="project_root"
             app:title="项目根目录"
-            app:summary="/storage/emulated/0/Akode"
+            app:summary="@string/default_project_root_summary"
             app:iconSpaceReserved="false" />
         
         <Preference

@@ -2,7 +2,7 @@
   "schema": 1,
   "policy": "Only inherited exact issue + message + file fingerprints are allowed. Counts may decrease. New warnings fail CI. Changes require an explicit maintainer-reviewed explanation; never auto-update in CI.",
   "source": "Actual app lintX86_64Debug XML at initial public CI setup, 2026-11-16. See docs/MAINTENANCE.md for triage and upgrade policy.",
-  "totalWarnings": 449,
+  "totalWarnings": 447,
   "warnings": [
     {
       "id": "AlwaysShowAction",
@@ -305,14 +305,6 @@
     {
       "id": "HardcodedText",
       "message": "Hardcoded string \"$ _\", should use `@string` resource",
-      "locations": [
-        "app/src/main/res/layout/activity_main.xml"
-      ],
-      "count": 1
-    },
-    {
-      "id": "HardcodedText",
-      "message": "Hardcoded string \"$ akode --version\", should use `@string` resource",
       "locations": [
         "app/src/main/res/layout/activity_main.xml"
       ],
@@ -1329,14 +1321,6 @@
     {
       "id": "HardcodedText",
       "message": "Hardcoded string \"项目名称\", should use `@string` resource",
-      "locations": [
-        "app/src/main/res/layout/activity_new_project.xml"
-      ],
-      "count": 1
-    },
-    {
-      "id": "HardcodedText",
-      "message": "Hardcoded string \"项目路径: /storage/emulated/0/Akode/\", should use `@string` resource",
       "locations": [
         "app/src/main/res/layout/activity_new_project.xml"
       ],

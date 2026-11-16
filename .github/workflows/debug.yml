@@ -13,6 +13,7 @@ concurrency:
 jobs:
   build:
     name: Build installable Debug APKs
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
@@ -82,34 +83,66 @@ jobs:
             ${{ steps.sdk.outputs.root }}/ndk/28.2.13676358
             ${{ steps.sdk.outputs.root }}/licenses
           key: ${{ steps.sdk-cache.outputs.cache-primary-key }}
-      - name: Check source and build both Debug APKs
-        run: |
-          python3 scripts/ci/check-source.py
-          ./gradlew :app:assembleAarch64Debug :app:assembleX86_64Debug --console=plain
-      - name: Prepare APKs and checksums
+      - name: Restore the dedicated development signing key
         env:
-          BUILD_COMMIT: ${{ github.sha }}
+          DEBUG_KEYSTORE: ${{ secrets.VKYRA_DEBUG_KEYSTORE_BASE64 }}
         run: |
-          mkdir -p build/debug-downloads
-          for abi in aarch64 x86_64; do
-            cp "app/build/outputs/apk/$abi/debug/app-$abi-debug.apk" \
-              "build/debug-downloads/Vkyra-debug-$abi.apk"
-          done
-          printf '%s\n' "$BUILD_COMMIT" > build/debug-downloads/COMMIT.txt
-          (cd build/debug-downloads && sha256sum ./*.apk > SHA256SUMS.txt)
-          {
-            echo '### Debug APK downloads'
-            echo 'Download **vkyra-debug-apks** from the Artifacts section of this run.'
-            echo '- aarch64: ARM64 Android phones/tablets'
-            echo '- x86_64: compatible emulators/devices'
-            echo '- Development certificate; an app signed with a different key cannot be updated in place.'
-            echo "- Commit: $BUILD_COMMIT"
-          } >> "$GITHUB_STEP_SUMMARY"
-      - name: Upload installable Debug APKs
+          python3 - <<'PYKEY'
+          import base64, os, pathlib
+          encoded = os.environ.get('DEBUG_KEYSTORE', '')
+          if not encoded:
+              raise SystemExit('Configure VKYRA_DEBUG_KEYSTORE_BASE64 for consistent full/Lite updates')
+          key = pathlib.Path.home() / '.android/debug.keystore'
+          key.parent.mkdir(parents=True, exist_ok=True)
+          key.write_bytes(base64.b64decode(encoded, validate=True))
+          key.chmod(0o600)
+          PYKEY
+      - name: Build and validate all four Debug APKs
+        run: bash scripts/ci/build-debug.sh
+      - name: Upload aarch64 full Debug APK
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
-          name: vkyra-debug-apks
-          path: build/debug-downloads/
+          name: vkyra-debug-aarch64-full
+          path: build/debug-downloads/aarch64-full/
           if-no-files-found: error
           retention-days: 7
           compression-level: 0
+      - name: Upload aarch64 lite Debug APK
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: vkyra-debug-aarch64-lite
+          path: build/debug-downloads/aarch64-lite/
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
+      - name: Upload x86_64 full Debug APK
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: vkyra-debug-x86_64-full
+          path: build/debug-downloads/x86_64-full/
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
+      - name: Upload x86_64 lite Debug APK
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: vkyra-debug-x86_64-lite
+          path: build/debug-downloads/x86_64-lite/
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
+      - name: Publish download guide
+        run: |
+          {
+            echo '### Debug APK downloads'
+            echo '| Device | First install / toolchain update | App-only update |'
+            echo '| --- | --- | --- |'
+            echo '| ARM64 phone/tablet | vkyra-debug-aarch64-full | vkyra-debug-aarch64-lite |'
+            echo '| x86_64 emulator/device | vkyra-debug-x86_64-full | vkyra-debug-x86_64-lite |'
+            echo 'Download only the artifact you need. Each contains one APK, checksums and build metadata.'
+            echo 'Lite reuses tools already extracted by Full; install Full first when tools are missing or need an update.'
+            echo 'All four APKs share the same development certificate, application ID and dated version.'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Remove temporary development key
+        if: always()
+        run: rm -f "$HOME/.android/debug.keystore"

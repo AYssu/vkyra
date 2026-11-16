@@ -235,7 +235,23 @@ public class ClangInstaller {
     /**
      * 显示安装确认弹窗
      */
+    public static boolean hasBundledArchive(Context context) {
+        return hasArchiveInAssets(context, getDeviceArch(context));
+    }
+
+    public static void showMissingArchiveDialog(Context context) {
+        new MaterialAlertDialogBuilder(context)
+                .setTitle(com.vkyra.code.R.string.lite_toolchain_required_title)
+                .setMessage(com.vkyra.code.R.string.lite_toolchain_required_message)
+                .setPositiveButton("确定", null)
+                .show();
+    }
+
     public static void showInstallDialog(Context context, Runnable onInstalled) {
+        if (!hasBundledArchive(context)) {
+            showMissingArchiveDialog(context);
+            return;
+        }
         String arch = getDeviceArch(context);
 
         if (arch == null) {
@@ -267,6 +283,10 @@ public class ClangInstaller {
      * 带进度条的安装
      */
     public static void installWithProgress(Context context, Runnable onSuccess) {
+        if (!hasBundledArchive(context)) {
+            showMissingArchiveDialog(context);
+            return;
+        }
         Context app = context.getApplicationContext();
         InstallerDialogs.show(context, "安装Clang 编译器",
                 (cancellation, progress) -> installInternal(app, false, cancellation, progress), onSuccess);
@@ -519,6 +539,10 @@ public class ClangInstaller {
      * 强制重新安装（暂存、验证、切换，失败保留旧版本）
      */
     public static void reinstallWithProgress(Context context, Runnable onSuccess) {
+        if (!hasBundledArchive(context)) {
+            showMissingArchiveDialog(context);
+            return;
+        }
         Context app = context.getApplicationContext();
         InstallerDialogs.show(context, "重新安装Clang 编译器",
                 (cancellation, progress) -> installInternal(app, true, cancellation, progress), onSuccess);

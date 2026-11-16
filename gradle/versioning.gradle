@@ -1,0 +1,5 @@
+// One date per build; CI pins this property once for all four downloadable APKs.
+def buildDate = java.time.LocalDate.parse(providers.gradleProperty('vkyraBuildDate').filter { !it.isEmpty() }
+        .getOrElse(java.time.LocalDate.now(java.time.ZoneId.of('Asia/Shanghai')).toString()))
+ext.vkyraVersionName = '0.1.0' + buildDate.format(java.time.format.DateTimeFormatter.ofPattern('MMdd'))
+ext.vkyraVersionCode = Integer.parseInt(buildDate.format(java.time.format.DateTimeFormatter.BASIC_ISO_DATE))

@@ -233,7 +233,7 @@ public final class AppPreferences {
     }
     
     // 项目根目录
-    public static final String DEFAULT_PROJECT_ROOT = "/storage/emulated/0/Akode";
+    public static final String DEFAULT_PROJECT_ROOT = "/storage/emulated/0/Vkyra";
     
     public static void setProjectRoot(Context context, String path) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -242,7 +242,10 @@ public final class AppPreferences {
     
     public static String getProjectRoot(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        return prefs.getString(KEY_PROJECT_ROOT, DEFAULT_PROJECT_ROOT);
+        // Keep the old default location if it already contains the user's projects.
+        String fallback = new java.io.File("/storage/emulated/0/Akode").isDirectory()
+                ? "/storage/emulated/0/Akode" : DEFAULT_PROJECT_ROOT;
+        return prefs.getString(KEY_PROJECT_ROOT, fallback);
     }
     
     public static boolean getAutoSave(Context context) {

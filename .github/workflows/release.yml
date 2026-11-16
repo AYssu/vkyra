@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Existing version tag matching app versionName (for example v1.1.2)
+        description: Existing version tag matching app versionName (for example v0.1.01116)
         type: string
         required: true
 
@@ -25,6 +25,7 @@ jobs:
     outputs:
       commit: ${{ steps.tag.outputs.commit }}
       tag: ${{ steps.tag.outputs.tag }}
+      build-date: ${{ steps.tag.outputs.build-date }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -49,6 +50,7 @@ jobs:
     uses: ./.github/workflows/ci.yml
     with:
       ref: ${{ needs.source.outputs.commit }}
+      build-date: ${{ needs.source.outputs.build-date }}
     # No signing secrets enter the reusable build or its device tests.
 
   release:

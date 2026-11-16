@@ -53,7 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
-                    android:text="$ akode --version"
+                    android:text="@string/home_cli_heading"
                     android:textColor="#4EC9B0"
                     android:textSize="14sp" />
 

@@ -88,7 +88,7 @@ public class RecentProjectManager {
     }
     
     /**
-     * 检查目录是否是 Akode 项目
+     * 检查目录是否是 Vkyra 项目
      */
     public static boolean isAkodeProject(File dir) {
         if (dir == null || !dir.exists() || !dir.isDirectory()) return false;
@@ -256,7 +256,7 @@ public class RecentProjectManager {
     }
     
     /**
-     * 扫描项目根目录，获取所有 Akode 项目（按最后打开时间排序）
+     * 扫描项目根目录，获取所有 Vkyra 项目（按最后打开时间排序）
      */
     public static List<ProjectInfo> getRecentProjects(Context context) {
         List<ProjectInfo> projects = new ArrayList<>();

@@ -38,7 +38,7 @@ public final class ShellConfiguration {
                     "# Vkyra Shell Config v" + currentVersion + "\n" +
                     "\n" +
                     "# 路径处理函数: HOME显示~, 最多3级目录, 超过显示.../x/x/x\n" +
-                    "_akode_pwd() {\n" +
+                    "_vkyra_pwd() {\n" +
                     "    local p=\"$PWD\"\n" +
                     "    # 替换 HOME 为 ~\n" +
                     "    if [ \"$p\" = \"$HOME\" ]; then\n" +
@@ -64,10 +64,10 @@ public final class ShellConfiguration {
                     "# 检测是否为 root 用户\n" +
                     "if [ \"$(id -u)\" = \"0\" ]; then\n" +
                     "    # root 用户: 红色\n" +
-                    "    PS1=$'\\033[1;31mroot@vkyra\\033[0m in \\033[1;34m'\"\\$(_akode_pwd)\"$'\\033[0m# '\n" +
+                    "    PS1=$'\\033[1;31mroot@vkyra\\033[0m in \\033[1;34m'\"\\$(_vkyra_pwd)\"$'\\033[0m# '\n" +
                     "else\n" +
                     "    # 普通用户: 绿色\n" +
-                    "    PS1=$'\\033[1;32muser@vkyra\\033[0m in \\033[1;34m'\"\\$(_akode_pwd)\"$'\\033[0m\\$ '\n" +
+                    "    PS1=$'\\033[1;32muser@vkyra\\033[0m in \\033[1;34m'\"\\$(_vkyra_pwd)\"$'\\033[0m\\$ '\n" +
                     "fi\n" +
                     "\n" +
                     "# ls 颜色支持\n" +

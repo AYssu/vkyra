@@ -20,7 +20,7 @@ import java.util.Locale;
 public final class Log {
 
     private static final String LOG_DIR_NAME = "logs";
-    private static final String LOG_FILE_NAME = "akode.log";
+    private static final String LOG_FILE_NAME = "vkyra.log";
     private static final long MAX_BYTES_BEFORE_ROTATE = 1_500_000; // ~1.5MB
     private static final int MAX_ROTATED_FILES = 3;
 

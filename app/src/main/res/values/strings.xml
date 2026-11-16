@@ -1,5 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Vkyra</string>
     <string name="app_tagline">C/C++ IDE · Powered by Clang</string>
     <string name="update_download_progress">下载中… %1$d%%</string>
+    <!-- Literal command option: the two ASCII hyphens are intentional. -->
+    <string name="home_cli_heading" tools:ignore="TypographyDashes">$ vkyra --version</string>
+    <string name="new_project_path_hint">项目路径: /storage/emulated/0/Vkyra/</string>
+    <string name="default_project_root_summary">/storage/emulated/0/Vkyra</string>
+    <string name="lite_toolchain_required_title">需要完整版工具链</string>
+    <string name="lite_toolchain_required_message">当前安装包不含 Clang 工具链。请用相同签名的 Vkyra 完整版覆盖安装并完成工具链安装，再使用 Lite 更新。已有项目和工具链无需删除。</string>
 </resources>
