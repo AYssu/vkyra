@@ -16,7 +16,9 @@ if "$adb" -s "$serial" get-state >/dev/null 2>&1; then
 fi
 [[ -c /dev/kvm ]] || { echo 'A Linux runner with KVM is required.' >&2; exit 1; }
 sudo chmod a+rw /dev/kvm
-printf 'no\n' | "$avdmanager_bin" create avd --name "vkyra_ci_api$api" --package "system-images;android-$api;default;x86_64" --device pixel_2
+image_api="$api"
+[[ "$api" != 37 ]] || image_api=37.0
+printf 'no\n' | "$avdmanager_bin" create avd --name "vkyra_ci_api$api" --package "system-images;android-$image_api;default;x86_64" --device pixel_2
 mkdir -p build/ci-evidence
 "$sdk_root/emulator/emulator" -avd "vkyra_ci_api$api" -port 5556 -no-window -no-audio -no-boot-anim \
   -no-snapshot -gpu swiftshader_indirect -memory 3072 -cores 2 >build/ci-evidence/emulator.log 2>&1 &
