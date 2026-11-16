@@ -34,3 +34,9 @@ The separate release workflow resolves an existing version tag to a commit, requ
 Fork PR checks use `contents: read`, no signing secrets, read-only Gradle caches and no persisted checkout credentials. The workflows do not use `pull_request_target`. A maintainer must still review source and workflow changes before merging; passing tests is not a security proof.
 
 LFS payloads and full APKs are large. The host job restores cached LFS objects before materializing and verifying assets; device jobs reuse build artifacts without downloading LFS again. SDK/NDK and each device image have separate monthly/configuration cache keys, and SDK installs are skipped on exact hits. Device jobs install no build-only SDK/NDK. Only main-branch pushes save these caches; PRs restore them without writing. AVD user data, credentials and test results are never cached, and all verification still runs. Artifacts expire after 7 days. GitHub LFS transfer/storage, Actions minutes, caches and artifact storage still consume the repository owner's quota. Tune retention and device coverage with measured costs, while keeping required checks truthful.
+
+## Manual Debug APK build
+
+Run **Actions → Debug APK → Run workflow** on `main` to build only the two installable Debug variants. Download `vkyra-debug-apks` from the successful run: `Vkyra-debug-aarch64.apk`, `Vkyra-debug-x86_64.apk`, `COMMIT.txt` and `SHA256SUMS.txt`. Artifacts expire after 7 days. It uses the normal development certificate and no release secrets; keys can differ between clean runners, so it may not update an existing installation in place. Preserve your projects before uninstalling an app with a different certificate.
+
+This workflow reuses the pinned build environment and LFS/SDK caches. It does not replace the full `CI required` gate on pushes and PRs. It does not publish a GitHub Release.

@@ -42,7 +42,7 @@ Vkyra 是一款面向 Android 的开源 C/C++ 开发环境，将代码编辑、C
 | `aarch64` | 普通 ARM64 Android 手机和平板 |
 | `x86_64` | 对应架构设备与 Android 模拟器 |
 
-1. 在 [Releases](https://github.com/AYssu/vkyra/releases) 查看正式发布；需要测试主分支时，前往 [Actions](https://github.com/AYssu/vkyra/actions/workflows/ci.yml) 的成功运行下载构建产物。
+1. 在 [Releases](https://github.com/AYssu/vkyra/releases) 查看正式发布；需要测试主分支时，前往 [Debug APK](https://github.com/AYssu/vkyra/actions/workflows/debug.yml) 的成功运行，在 **Artifacts → vkyra-debug-apks** 下载测试包。
 2. 安装对应架构的 APK，首次打开时按提示安装内置工具链。
 3. 创建或打开项目，编辑 C/C++ 文件，编译并运行。
 
