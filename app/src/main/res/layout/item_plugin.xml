@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:longClickable="true"
+    app:cardBackgroundColor="#1E1E1E"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="0dp"
+    app:strokeColor="#2D2D2D"
+    app:strokeWidth="1dp"
+    app:rippleColor="#333333">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 顶部：名称 + 开关 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/plugin_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="插件名称"
+                android:textColor="#E0E0E0"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switch_enabled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true" />
+
+        </LinearLayout>
+
+        <!-- 版本 + 作者 -->
+        <TextView
+            android:id="@+id/plugin_version_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="v1.0.0, 作者 匿名"
+            android:textColor="#808080"
+            android:textSize="13sp" />
+
+        <!-- 描述 -->
+        <TextView
+            android:id="@+id/plugin_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="插件描述"
+            android:textColor="#9E9E9E"
+            android:textSize="13sp"
+            android:lineSpacingExtra="2dp" />
+
+        <TextView
+            android:id="@+id/plugin_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/uninstall_btn_bg"
+            android:text="加载失败，点击查看原因"
+            android:textColor="#FF8A80"
+            android:textSize="11sp"
+            android:visibility="gone" />
+
+        <!-- 底部操作栏 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:gravity="end|center_vertical">
+
+            <!-- ABI标签 -->
+            <TextView
+                android:id="@+id/plugin_abi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:background="@drawable/abi_tag_bg"
+                android:text="arm64-v8a"
+                android:textColor="#4EC9B0"
+                android:textSize="11sp"
+                android:visibility="gone" />
+
+            <!-- GitHub图标 -->
+            <ImageView
+                android:id="@+id/btn_github"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_github"
+                app:tint="#808080"
+                android:visibility="gone" />
+
+            <!-- 卸载按钮 -->
+            <LinearLayout
+                android:id="@+id/btn_uninstall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:background="@drawable/uninstall_btn_bg">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_delete"
+                    app:tint="#9E9E9E" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="卸载"
+                    android:textColor="#9E9E9E"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

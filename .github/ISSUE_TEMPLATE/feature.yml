@@ -1,0 +1,30 @@
+name: Feature request / 功能建议
+description: Explain the problem and proposed outcome / 说明需求和目标
+title: '[Feature] '
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or workflow / 当前遇到的问题
+      description: Explain what you are trying to accomplish and why the current behavior falls short.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior / 希望如何改进
+      description: Describe visible behavior, with a small example when useful.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives and scope / 替代方案和范围
+      description: Include workarounds or compatible libraries if you know them.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting / 提交前确认
+      options:
+        - label: I searched existing issues and discussions / 我已搜索已有建议
+          required: true

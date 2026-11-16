@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="12dp"
+    android:background="?attr/selectableItemBackground">
+
+    <!-- 左侧：头像 -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_sponsor_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="12dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_developer"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.Corner.Full"
+        app:strokeColor="#334EC9B0"
+        app:strokeWidth="1dp" />
+
+    <!-- 中间：名称 -->
+    <TextView
+        android:id="@+id/tv_sponsor_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="#E0E0E0"
+        android:textSize="15sp" />
+
+    <!-- 右侧：金额和图标 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- 赞助金额 -->
+        <TextView
+            android:id="@+id/tv_sponsor_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#4EC9B0"
+            android:textSize="14sp"
+            android:layout_marginEnd="12dp" />
+
+        <!-- GitHub 图标 -->
+        <ImageView
+            android:id="@+id/iv_github"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_github"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone" />
+
+        <!-- Bilibili 图标 -->
+        <ImageView
+            android:id="@+id/iv_bilibili"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_bilibili"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone" />
+
+        <!-- QQ 图标 -->
+        <ImageView
+            android:id="@+id/iv_qq"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_qq"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</LinearLayout>

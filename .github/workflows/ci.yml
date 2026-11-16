@@ -1,0 +1,137 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      ref:
+        description: Exact commit to validate (used by the release workflow)
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  host:
+    name: Host build, tests and lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      VKYRA_CI_EXPECTED_SHA: ${{ inputs.ref || github.sha }}
+    steps:
+      # All actions below are pinned to commits verified against their official tags.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+          lfs: true
+          persist-credentials: false
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6
+        with:
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
+      - name: Check workflow definitions and script syntax
+        run: |
+          go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.7
+          for script in scripts/ci/*.sh; do bash -n "$script"; done
+          python3 -m compileall -q scripts distribution
+      - name: Install the real host language server
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install --no-install-recommends -y clangd
+          echo "VKYRA_HOST_CLANGD=$(command -v clangd)" >> "$GITHUB_ENV"
+      - name: Install the pinned Android SDK and NDK
+        run: bash scripts/ci/install-sdk.sh build
+      - name: Verify source, licenses, JVM tests, lint and both ABI builds
+        run: bash scripts/ci/verify.sh
+      - name: Upload exact device-test inputs
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: android-test-inputs
+          path: build/ci-inputs/
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
+      - name: Upload development builds and host reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: vkyra-builds
+          path: |
+            app/build/outputs/apk/
+            app/build/outputs/mapping/
+            app/build/reports/
+            app/build/test-results/
+            terminal-emulator/build/reports/
+            terminal-emulator/build/test-results/
+            build/ci-evidence/
+            build/ci-inputs/manifest.json
+          if-no-files-found: warn
+          retention-days: 7
+          compression-level: 0
+
+  android:
+    name: Android API ${{ matrix.api }}
+    needs: host
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        api: [26, 30, 37]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+          persist-credentials: false
+          # Source scripts only: the full LFS payloads are already inside host-built APKs.
+          lfs: false
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: android-test-inputs
+          path: build/ci-inputs
+      - name: Install dedicated emulator image
+        run: bash scripts/ci/install-sdk.sh '${{ matrix.api }}'
+      - name: Full Android regression and real R8 release smoke
+        run: bash scripts/ci/run-emulator.sh '${{ matrix.api }}'
+      - name: Upload actual device evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: android-api-${{ matrix.api }}-evidence
+          path: |
+            build/ci-evidence/*.txt
+            build/ci-evidence/*.json
+            build/ci-evidence/*.log
+          if-no-files-found: warn
+          retention-days: 7
+
+  required:
+    name: CI required
+    if: always()
+    needs: [host, android]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require every gate to pass
+        env:
+          HOST_RESULT: ${{ needs.host.result }}
+          ANDROID_RESULT: ${{ needs.android.result }}
+        run: |
+          test "$HOST_RESULT" = success
+          test "$ANDROID_RESULT" = success

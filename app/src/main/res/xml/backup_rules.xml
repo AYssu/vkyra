@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Only UI/editor preferences are portable; credentials, drafts and binaries stay local. -->
+    <include domain="sharedpref" path="CppIDESettings.xml" />
+</full-backup-content>

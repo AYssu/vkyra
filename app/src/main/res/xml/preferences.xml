@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="编辑器设置" app:iconSpaceReserved="false">
+        
+        <SwitchPreferenceCompat
+            app:key="remember_last_file"
+            app:title="记住上次打开的文件"
+            app:summary="下次打开编辑器时恢复上次的文件和目录"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false" />
+        
+        <SwitchPreferenceCompat
+            app:key="auto_save"
+            app:title="自动保存"
+            app:summary="自动保存已修改的文件"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false" />
+        
+        <Preference
+            app:key="auto_save_interval"
+            app:title="自动保存间隔"
+            app:summary="10 秒"
+            app:dependency="auto_save"
+            app:iconSpaceReserved="false" />
+        
+        <SwitchPreferenceCompat
+            app:key="enable_lsp"
+            app:title="启用 LSP 语义分析"
+            app:summary="启用 clangd 提供代码审查、跳转定义、查找引用等功能"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false" />
+        
+        <Preference
+            app:key="editor_font_size"
+            app:title="编辑器字体大小"
+            app:summary="选择代码编辑器字体大小"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            app:key="editor_theme"
+            app:title="编辑器主题"
+            app:summary="选择代码编辑器配色主题"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="终端设置" app:iconSpaceReserved="false">
+        
+        <Preference
+            app:key="font_size"
+            app:title="终端字体大小"
+            app:summary="选择终端字体大小"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            app:key="terminal_font"
+            app:title="终端字体"
+            app:summary="选择终端字体样式"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            app:key="show_bottom_toolbar"
+            app:title="显示底部操作栏"
+            app:summary="控制终端底部操作栏显示"
+            app:defaultValue="true"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="编译设置" app:iconSpaceReserved="false">
+        
+        <Preference
+            app:key="install_build_tools"
+            app:title="安装编译工具"
+            app:summary="安装 CMake、Make、Ninja 构建工具"
+            app:iconSpaceReserved="false" />
+        
+        <Preference
+            app:key="compile_commands"
+            app:title="编译命令管理"
+            app:summary="管理自定义编译和运行命令"
+            app:iconSpaceReserved="false" />
+        
+        <Preference
+            app:key="clang_args"
+            app:title="Clang 编译参数"
+            app:summary="Clang编译器参数 (C/C++通用)"
+            app:iconSpaceReserved="false" />
+        
+        <Preference
+            app:key="android_api_level"
+            app:title="Android API Level"
+            app:summary="目标 Android API 版本 (21-35)"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="代码混淆 (OLLVM)" app:iconSpaceReserved="false">
+        
+        <SwitchPreferenceCompat
+            app:key="obf_irobf_indbr"
+            app:title="indbr: 间接分支混淆"
+            app:summary="-mllvm -irobf-indbr（加密跳转目标）"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+        
+        <SwitchPreferenceCompat
+            app:key="obf_irobf_icall"
+            app:title="icall: 间接函数调用混淆"
+            app:summary="-mllvm -irobf-icall（加密函数目标）"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+        
+        <SwitchPreferenceCompat
+            app:key="obf_irobf_indgv"
+            app:title="indgv: 间接全局变量引用混淆"
+            app:summary="-mllvm -irobf-indgv（加密全局变量地址）"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+        
+        <SwitchPreferenceCompat
+            app:key="obf_irobf_cse"
+            app:title="cse: C 字符串加密"
+            app:summary="-mllvm -irobf-cse"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+        
+        <SwitchPreferenceCompat
+            app:key="obf_irobf_fla"
+            app:title="fla: 控制流平坦化"
+            app:summary="-mllvm -irobf-fla"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+        
+        <SwitchPreferenceCompat
+            app:key="obf_irobf_cie"
+            app:title="cie: 整数常量加密"
+            app:summary="-mllvm -irobf-cie（需对应版本支持）"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+        
+        <SwitchPreferenceCompat
+            app:key="obf_irobf_cfe"
+            app:title="cfe: 浮点常量加密"
+            app:summary="-mllvm -irobf-cfe（需对应版本支持）"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+        
+        <SwitchPreferenceCompat
+            app:key="obf_irobf_rtti"
+            app:title="rtti: MS CXXABI RTTI 名称擦除"
+            app:summary="-mllvm -irobf-rtti（实验性，需 randomSeed）"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="功能设置" app:iconSpaceReserved="false">
+        
+        <SwitchPreferenceCompat
+            app:key="enable_root_run"
+            app:title="启用Root运行"
+            app:summary="使用su以root权限执行编译后的程序"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            app:key="custom_su"
+            app:title="自定义SU命令"
+            app:summary="Root运行时使用的su命令"
+            app:dependency="enable_root_run"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            app:key="enable_logs"
+            app:title="启用日志"
+            app:summary="开启终端操作日志记录"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            app:key="keep_screen_on"
+            app:title="保持屏幕常亮"
+            app:summary="终端运行时保持屏幕不熄灭"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+<PreferenceCategory app:title="高级设置" app:iconSpaceReserved="false">
+        
+        <Preference
+            app:key="project_root"
+            app:title="项目根目录"
+            app:summary="/storage/emulated/0/Akode"
+            app:iconSpaceReserved="false" />
+        
+        <Preference
+            app:key="clear_cache"
+            app:title="清除缓存"
+            app:summary="清除应用缓存和临时文件"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            app:key="export_logs"
+            app:title="导出日志"
+            app:summary="导出终端操作日志文件"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="关于" app:iconSpaceReserved="false">
+        
+        <Preference
+            app:key="about"
+            app:title="关于应用"
+            app:summary="C++ IDE v1.0.0"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            app:key="qq_group"
+            app:title="官方群聊"
+            app:summary="加入 Vkyra C/C++ IDE 交流群"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            app:key="version"
+            app:title="版本信息"
+            app:summary="构建版本: 1.0.0"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            app:key="acknowledgements"
+            app:title="致谢"
+            app:summary="查看本项目使用的开源库"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

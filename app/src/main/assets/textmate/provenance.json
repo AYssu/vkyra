@@ -1,0 +1,17 @@
+{
+  "repository": "https://github.com/microsoft/vscode",
+  "commit": "0fbab1451fed17c969feb57b0ab596adf895ba0b",
+  "files": {
+    "cpp/c.tmLanguage.json": "extensions/cpp/syntaxes/c.tmLanguage.json",
+    "cpp/cpp.tmLanguage.json": "extensions/cpp/syntaxes/cpp.tmLanguage.json",
+    "cpp/platform.tmLanguage.json": "extensions/cpp/syntaxes/platform.tmLanguage.json",
+    "cpp/language-configuration.json": "extensions/cpp/language-configuration.json",
+    "json/json.tmLanguage.json": "extensions/json/syntaxes/JSON.tmLanguage.json",
+    "json/language-configuration.json": "extensions/json/language-configuration.json",
+    "make/make.tmLanguage.json": "extensions/make/syntaxes/make.tmLanguage.json",
+    "make/language-configuration.json": "extensions/make/language-configuration.json",
+    "licenses/vscode-MIT.txt": "LICENSE.txt",
+    "licenses/vscode-notices.txt": "ThirdPartyNotices.txt",
+    "cpp/cpp.embedded.macro.tmLanguage.json": "extensions/cpp/syntaxes/cpp.embedded.macro.tmLanguage.json"
+  }
+}

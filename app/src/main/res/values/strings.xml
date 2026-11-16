@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Vkyra</string>
+    <string name="app_tagline">C/C++ IDE · Powered by Clang</string>
+    <string name="update_download_progress">下载中… %1$d%%</string>
+</resources>

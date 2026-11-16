@@ -1,0 +1,38 @@
+{
+  "languages": [
+    {
+      "name": "c",
+      "scopeName": "source.c",
+      "grammar": "textmate/cpp/c.tmLanguage.json",
+      "languageConfiguration": "textmate/cpp/language-configuration.json"
+    },
+    {
+      "name": "cpp",
+      "scopeName": "source.cpp",
+      "grammar": "textmate/cpp/cpp.tmLanguage.json",
+      "languageConfiguration": "textmate/cpp/language-configuration.json"
+    },
+    {
+      "name": "platform",
+      "scopeName": "source.c.platform",
+      "grammar": "textmate/cpp/platform.tmLanguage.json"
+    },
+    {
+      "name": "cpp-macro",
+      "scopeName": "source.cpp.embedded.macro",
+      "grammar": "textmate/cpp/cpp.embedded.macro.tmLanguage.json"
+    },
+    {
+      "name": "json",
+      "scopeName": "source.json",
+      "grammar": "textmate/json/json.tmLanguage.json",
+      "languageConfiguration": "textmate/json/language-configuration.json"
+    },
+    {
+      "name": "makefile",
+      "scopeName": "source.makefile",
+      "grammar": "textmate/make/make.tmLanguage.json",
+      "languageConfiguration": "textmate/make/language-configuration.json"
+    }
+  ]
+}

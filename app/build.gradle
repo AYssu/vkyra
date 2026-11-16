@@ -1,0 +1,259 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+def signingProps = new Properties()
+def signingPropsFile = rootProject.file("keystore.properties")
+if (signingPropsFile.exists()) {
+    signingPropsFile.withInputStream { signingProps.load(it) }
+}
+
+// CI supplies these only in the protected release job. Local signing uses the
+// ignored keystore.properties file; never place credentials in Gradle arguments.
+def releaseSigning = [
+    storeFile: providers.environmentVariable('VKYRA_KEYSTORE_FILE').orElse(signingProps.getProperty('storeFile', '')).get(),
+    storePassword: providers.environmentVariable('VKYRA_KEYSTORE_PASSWORD').orElse(signingProps.getProperty('storePassword', '')).get(),
+    keyAlias: providers.environmentVariable('VKYRA_KEY_ALIAS').orElse(signingProps.getProperty('keyAlias', '')).get(),
+    keyPassword: providers.environmentVariable('VKYRA_KEY_PASSWORD').orElse(signingProps.getProperty('keyPassword', '')).get()
+]
+def hasReleaseSigning = releaseSigning.values().any { !it.isEmpty() }
+if (hasReleaseSigning && releaseSigning.values().any { it.isEmpty() }) {
+    throw new GradleException('Release signing is incomplete. Set all four VKYRA signing variables or keystore.properties entries.')
+}
+if (hasReleaseSigning && !rootProject.file(releaseSigning.storeFile).isFile()) {
+    throw new GradleException('Release keystore file does not exist.')
+}
+
+abstract class PrepareLegalAssets extends DefaultTask {
+    @InputFiles
+    @PathSensitive(PathSensitivity.RELATIVE)
+    abstract ConfigurableFileCollection getLegalFiles()
+
+    @OutputDirectory
+    abstract DirectoryProperty getOutputDirectory()
+
+    @Inject
+    abstract FileSystemOperations getFileOperations()
+
+    @TaskAction
+    void prepare() {
+        fileOperations.sync {
+            from(legalFiles)
+            into(outputDirectory.dir('licenses'))
+        }
+    }
+}
+
+def legalAssets = tasks.register('prepareLegalAssets', PrepareLegalAssets) {
+    legalFiles.from(rootProject.file('licenses'), rootProject.files('LICENSE', 'LICENSE.md', 'THIRD_PARTY_NOTICES.md'))
+    outputDirectory.set(layout.buildDirectory.dir('generated/legalAssets'))
+}
+
+android {
+    namespace 'com.vkyra.code'
+    ndkVersion = System.getenv("JITPACK_NDK_VERSION") ?: project.properties.ndkVersion
+    compileSdk 37
+
+
+
+    defaultConfig {
+        applicationId "com.vkyra.code"
+        minSdk 26
+        // Bundled executables require the existing target-28 execution model.
+        targetSdk 28
+        versionCode 1000112
+        versionName '1.1.2'
+        buildConfigField 'String', 'UPDATE_REPOSITORY', '"' + providers.gradleProperty('vkyra.updateRepository').getOrElse('').replace('\\', '\\\\').replace('"', '\\"') + '"'
+        
+        // 启用 multidex
+        multiDexEnabled true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    
+    // 为不同 ABI 创建 flavor (仅用于区分 clang 工具链)
+    flavorDimensions += "abi"
+    productFlavors {
+        aarch64 {
+            dimension "abi"
+        }
+        x86_64 {
+            dimension "abi"
+        }
+    }
+    
+    // ABI-specific archives live in their flavor source sets; merge never deletes source assets.
+    if (providers.gradleProperty('removeAllArchAssets').getOrElse('false').toBoolean()) {
+        sourceSets.configureEach { assets.exclude '**/*.tar.xz' }
+    }
+
+    signingConfigs {
+        if (hasReleaseSigning) {
+            distribution {
+                storeFile rootProject.file(releaseSigning.storeFile)
+                storePassword releaseSigning.storePassword
+                keyAlias releaseSigning.keyAlias
+                keyPassword releaseSigning.keyPassword
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true   // Standard AGP R8 only.
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (hasReleaseSigning) signingConfig signingConfigs.distribution
+        }
+        debug {
+            minifyEnabled false // Keep debug stack traces and instrumentation readable.
+            shrinkResources false
+            proguardFiles  'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    testOptions {
+        unitTests.includeAndroidResources = true
+        unitTests.all {
+            systemProperty "robolectric.dependency.repo.url", "https://repo.maven.apache.org/maven2"
+        }
+    }
+    lint {
+        // Explicit project invariant: direct-distribution IDE keeps target 28 so its
+        // bundled compiler can execute from filesDir. This is not a Play submission.
+        disable 'ExpiredTargetSdkVersion'
+    }
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
+
+    packaging {
+        resources {
+            excludes += [
+                'META-INF/DEPENDENCIES',
+                'META-INF/LICENSE',
+                'META-INF/LICENSE.txt',
+                'META-INF/NOTICE',
+                'META-INF/NOTICE.txt',
+                'META-INF/proguard/androidx-*.pro',
+                'META-INF/versions/9/OSGI-INF/MANIFEST.MF'
+            ]
+        }
+    }
+    
+    // 禁止 AAPT 压缩某些文件
+    androidResources {
+        noCompress 'xz', 'tar.xz'
+    }
+
+}
+
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        variant.sources.assets.addGeneratedSourceDirectory(legalAssets) { it.outputDirectory }
+    }
+    onVariants(selector().withBuildType('release')) { variant ->
+        variant.outputs.each { output ->
+            output.outputFileName.set(output.versionName.map { version ->
+                "Vkyra_C_CPP_IDE_${version}_${variant.flavorName}.apk"
+            })
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.github.zafarkhaja:java-semver:0.10.2'
+
+    coreLibraryDesugaring libs.desugar.jdk.libs
+
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.activity
+    implementation libs.constraintlayout
+    implementation libs.drawerlayout
+    
+    // Terminal dependencies
+    implementation project(':terminal-view')
+    implementation project(':terminal-emulator')
+    implementation project(':termux-shared')
+    implementation libs.preference
+
+    // Sora Editor - C++ code editor
+    implementation libs.sora.editor
+    implementation libs.sora.editor.textmate
+    
+    // libsu - Root access library
+    implementation libs.core
+    implementation libs.io
+    
+    // DocumentFile for file picker
+    implementation libs.documentfile
+    
+    // ZXing - QR Code generation
+    implementation 'com.google.zxing:core:3.5.4'
+    
+    // AndroidSVG - SVG rendering for plugin icons
+    implementation libs.androidsvg.aar
+    
+    // Apache Commons Compress - TAR and XZ support
+    implementation libs.commons.compress
+    
+    // XZ for Java - XZ compression support
+    implementation 'org.tukaani:xz:1.11'
+
+    // OkHttp - HTTP client (下载及网络请求)
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    
+    // Markwon - Markdown rendering
+    implementation libs.markwon.core
+    implementation libs.markwon.tables
+    implementation libs.markwon.tasklist
+    implementation libs.markwon.strikethrough
+    implementation libs.lsp4j
+    implementation libs.gson
+    
+    // JGit - Git implementation for Java (使用兼容 Android 的旧版本)
+    implementation libs.org.eclipse.jgit
+    
+    // SLF4J no-op implementation (JGit 依赖 SLF4J)
+    implementation 'org.slf4j:slf4j-nop:1.7.36'
+    
+    // CustomActivityOnCrash - 崩溃捕获
+    implementation libs.customactivityoncrash
+
+
+    // APK解析和修改
+    implementation libs.apk.parser
+
+    // ZIP文件操作
+    implementation libs.zip4j
+
+    // BouncyCastle - 用于证书生成
+    implementation libs.bcprov.jdk18on
+    implementation libs.bcpkix.jdk18on
+    implementation 'org.bouncycastle:bcutil-jdk18on:1.83'
+
+    // Google apksig - 官方APK签名库
+    implementation libs.apksig
+
+    // AXML编辑库 - 用于修改二进制XML
+    // Source: https://mvnrepository.com/artifact/io.github.reandroid/ARSCLib
+    implementation libs.arsclib
+    testImplementation libs.junit
+    testImplementation libs.robolectric
+    testImplementation "com.squareup.okhttp3:mockwebserver:4.12.0"
+    testImplementation "androidx.test:core:1.7.0"
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+
+}
+
+configurations.all {
+    exclude group: 'com.google.guava', module: 'listenablefuture'
+}
+

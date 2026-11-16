@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_save"
+        android:icon="@drawable/ic_save"
+        android:title="保存"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_run"
+        android:title="运行"
+        app:actionLayout="@layout/action_run_split_button"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_git"
+        android:icon="@drawable/ic_git_branch"
+        android:title="Git"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title="查找替换"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_goto_line"
+        android:title="跳转到行"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_format"
+        android:title="格式化代码"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_compile_mode"
+        android:title="编译模式"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_compile_command"
+        android:title="编译命令"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_open_terminal"
+        android:icon="@drawable/terminal_bg"
+        android:title="打开终端"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="设置"
+        app:showAsAction="never" />
+
+</menu>

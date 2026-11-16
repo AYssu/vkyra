@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- User-selected Git remotes may be HTTP (including local development servers).
+         App-owned update endpoints are separately restricted to HTTPS by VersionChecker. -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors><certificates src="system" /></trust-anchors>
+    </base-config>
+    <debug-overrides>
+        <trust-anchors><certificates src="user" /></trust-anchors>
+    </debug-overrides>
+</network-security-config>

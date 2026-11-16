@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 大屏设备（横向）适配 -->
+    <dimen name="main_padding">32dp</dimen>
+    <dimen name="main_padding_small">20dp</dimen>
+    <dimen name="main_padding_large">40dp</dimen>
+    
+    <!-- 卡片尺寸 -->
+    <dimen name="card_width_max">500dp</dimen>
+    <dimen name="card_padding">20dp</dimen>
+    <dimen name="card_corner_radius">14dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+    
+    <!-- 间距 -->
+    <dimen name="spacing_small">10dp</dimen>
+    <dimen name="spacing_medium">20dp</dimen>
+    <dimen name="spacing_large">28dp</dimen>
+    <dimen name="spacing_xlarge">40dp</dimen>
+    <dimen name="spacing_xxlarge">56dp</dimen>
+    
+    <!-- 图标尺寸 -->
+    <dimen name="icon_size_small">28dp</dimen>
+    <dimen name="icon_size_medium">40dp</dimen>
+    <dimen name="icon_size_large">56dp</dimen>
+    
+    <!-- 欢迎区域间距 -->
+    <dimen name="welcome_margin_top">24dp</dimen>
+    <dimen name="welcome_margin_bottom">32dp</dimen>
+</resources>
+

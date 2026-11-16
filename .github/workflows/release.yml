@@ -1,0 +1,107 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing version tag matching app versionName (for example v1.1.2)
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.event.inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  source:
+    name: Resolve tag and check distribution readiness
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      commit: ${{ steps.tag.outputs.commit }}
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Resolve the remote tag once
+        id: tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.inputs.tag || github.ref_name }}
+        run: python3 scripts/ci/resolve-release-tag.py
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ steps.tag.outputs.commit }}
+          persist-credentials: false
+          lfs: true
+      - name: Require complete licenses and corresponding-source provenance
+        run: python3 distribution/check.py --release
+
+  verify:
+    name: Verify exact release source
+    needs: source
+    uses: ./.github/workflows/ci.yml
+    with:
+      ref: ${{ needs.source.outputs.commit }}
+    # No signing secrets enter the reusable build or its device tests.
+
+  release:
+    name: Sign tested APKs and prepare draft
+    needs: [source, verify]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment: release
+    permissions:
+      contents: write
+    env:
+      RELEASE_TAG: ${{ needs.source.outputs.tag }}
+      RELEASE_COMMIT: ${{ needs.source.outputs.commit }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ needs.source.outputs.commit }}
+          persist-credentials: false
+          lfs: true
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: vkyra-builds
+          path: build/release-inputs
+      - name: Install exact signing tools
+        run: bash scripts/ci/install-sdk.sh build
+      - name: Recheck legal distribution readiness
+        run: python3 distribution/check.py --release
+      - name: Sign the exact CI-tested payloads
+        env:
+          VKYRA_KEYSTORE_BASE64: ${{ secrets.VKYRA_KEYSTORE_BASE64 }}
+          VKYRA_KEYSTORE_PASSWORD: ${{ secrets.VKYRA_KEYSTORE_PASSWORD }}
+          VKYRA_KEY_ALIAS: ${{ secrets.VKYRA_KEY_ALIAS }}
+          VKYRA_KEY_PASSWORD: ${{ secrets.VKYRA_KEY_PASSWORD }}
+        run: >-
+          python3 scripts/ci/sign-release.py --inputs build/release-inputs
+          --output build/release-assets --tag "$RELEASE_TAG" --commit "$RELEASE_COMMIT"
+      - name: Attach notices and source requirements
+        run: |
+          tar --exclude='__pycache__' --exclude='*.pyc' -czf build/release-assets/source-notices.tar.gz \
+            LICENSE LICENSE.md THIRD_PARTY_NOTICES.md licenses distribution \
+            terminal-emulator/LICENSE.md terminal-view/LICENSE.md termux-shared/LICENSE.md
+      - name: Verify tag still points at tested source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/ci/resolve-release-tag.py
+      - name: Create a draft for maintainer review
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release create "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY"
+          --verify-tag --target "$RELEASE_COMMIT" --draft --generate-notes
+          build/release-assets/*

@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "description": "Integrity inventory and public distribution evidence. Ordinary CI validates bytes and structure; --release requires actual redistribution license/notice obligations. Separate maintenanceItems do not block publication.",
+  "requiredNotices": [
+    "LICENSE",
+    "LICENSE.md",
+    "THIRD_PARTY_NOTICES.md",
+    "termux-shared/LICENSE.md",
+    "terminal-emulator/LICENSE.md",
+    "terminal-view/LICENSE.md",
+    "licenses/SOURCES.json"
+  ],
+  "assets": [
+    {
+      "path": "app/src/aarch64/assets/build-tools-aarch64.tar.xz",
+      "sha256": "21974fdc6a504701e93b7e01ae975f74d47353f3891a3536ef054b00de7a745c",
+      "sizeBytes": 4119892,
+      "known": {
+        "description": "Archive includes CMake, GNU Make and Ninja; historical scripts name CMake 3.28.1, Make 4.4.1 and Ninja 1.12.1, not a proof of actual binaries."
+      },
+      "releaseRequirements": [
+        {
+          "requirement": "Include GNU Make corresponding source/build material and all component and linked-library license notices; a CPack template is insufficient.",
+          "status": "unresolved",
+          "evidence": []
+        }
+      ],
+      "maintenanceItems": [
+        {
+          "requirement": "Record actual binary versions, exact source revisions, all patches and portable build recipes.",
+          "status": "unresolved",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "path": "app/src/aarch64/assets/clang-21-android-aarch64.tar.xz",
+      "sha256": "26f263dc7802f9a56c03acd7a01b78bbcd91d16cb655af267406b912e5fd7e1e",
+      "sizeBytes": 100662656,
+      "known": {
+        "compilerVersionClaim": "21.1.8",
+        "versionFile": "app/src/main/assets/clang-version",
+        "claimedRepository": "https://github.com/AYssu/llvm-project",
+        "claimedRevision": "dc10d994aa5a4602024a9d55b78c350561079f46"
+      },
+      "releaseRequirements": [
+        {
+          "requirement": "Inventory all included compiler runtimes, Android sysroot and shared-library components; retain their actual copyright/license notices and satisfy source obligations only where their own licenses require them.",
+          "status": "unresolved",
+          "evidence": []
+        }
+      ],
+      "maintenanceItems": [
+        {
+          "requirement": "Verify the claimed compiler source revision against the archive and record available fork sources and local patches for future maintenance.",
+          "status": "unresolved",
+          "evidence": []
+        },
+        {
+          "requirement": "Provide a portable build recipe for these Clang 21 archives; the historical LLVM 18 scripts are not that recipe. This is a maintenance requirement, not an unconditional Apache-2.0 source-disclosure obligation.",
+          "status": "unresolved",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "path": "app/src/aarch64/assets/zsh-5.9-android-aarch64.tar.xz",
+      "sha256": "ac1faf5c1f6c645b4211762d17fdfd768f8762c430514658ad4d6b09c33530f3",
+      "sizeBytes": 845000,
+      "known": {
+        "description": "Archive filename names Zsh 5.9; two plugin license files are present."
+      },
+      "releaseRequirements": [
+        {
+          "requirement": "Include actual shell, ncurses, plugin and other linked-library copyright/license notices. Source availability is required only for components whose licenses impose it.",
+          "status": "unresolved",
+          "evidence": []
+        }
+      ],
+      "maintenanceItems": [
+        {
+          "requirement": "Record actual Zsh/ncurses and plugin versions, exact source revisions, patches and a portable build recipe for future maintenance.",
+          "status": "unresolved",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "path": "app/src/x86_64/assets/build-tools-x86_64.tar.xz",
+      "sha256": "e80bf884111302c9d05721e25eb6b6e65f965de30d957c077694b21cb314a765",
+      "sizeBytes": 4517136,
+      "known": {
+        "description": "Archive includes CMake, GNU Make and Ninja; historical scripts name CMake 3.28.1, Make 4.4.1 and Ninja 1.12.1, not a proof of actual binaries."
+      },
+      "releaseRequirements": [
+        {
+          "requirement": "Include GNU Make corresponding source/build material and all component and linked-library license notices; a CPack template is insufficient.",
+          "status": "unresolved",
+          "evidence": []
+        }
+      ],
+      "maintenanceItems": [
+        {
+          "requirement": "Record actual binary versions, exact source revisions, all patches and portable build recipes.",
+          "status": "unresolved",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "path": "app/src/x86_64/assets/clang-21-android-x86_64.tar.xz",
+      "sha256": "5b16aa947dc64e8bac50e7e3da9b7e8962726a8bb7e1f7ba9916a8acb3e408f1",
+      "sizeBytes": 106440736,
+      "known": {
+        "compilerVersionClaim": "21.1.8",
+        "versionFile": "app/src/main/assets/clang-version",
+        "claimedRepository": "https://github.com/AYssu/llvm-project",
+        "claimedRevision": "dc10d994aa5a4602024a9d55b78c350561079f46"
+      },
+      "releaseRequirements": [
+        {
+          "requirement": "Inventory all included compiler runtimes, Android sysroot and shared-library components; retain their actual copyright/license notices and satisfy source obligations only where their own licenses require them.",
+          "status": "unresolved",
+          "evidence": []
+        }
+      ],
+      "maintenanceItems": [
+        {
+          "requirement": "Verify the claimed compiler source revision against the archive and record available fork sources and local patches for future maintenance.",
+          "status": "unresolved",
+          "evidence": []
+        },
+        {
+          "requirement": "Provide a portable build recipe for these Clang 21 archives; the historical LLVM 18 scripts are not that recipe. This is a maintenance requirement, not an unconditional Apache-2.0 source-disclosure obligation.",
+          "status": "unresolved",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "path": "app/src/x86_64/assets/zsh-5.9-android-x86_64.tar.xz",
+      "sha256": "a2afd51f6cd403b0211d03e9d821ad1d374b7f7f685c90312c9a71fa904ba9f6",
+      "sizeBytes": 901192,
+      "known": {
+        "description": "Archive filename names Zsh 5.9; two plugin license files are present."
+      },
+      "releaseRequirements": [
+        {
+          "requirement": "Include actual shell, ncurses, plugin and other linked-library copyright/license notices. Source availability is required only for components whose licenses impose it.",
+          "status": "unresolved",
+          "evidence": []
+        }
+      ],
+      "maintenanceItems": [
+        {
+          "requirement": "Record actual Zsh/ncurses and plugin versions, exact source revisions, patches and a portable build recipe for future maintenance.",
+          "status": "unresolved",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "path": "app/src/main/assets/demo.apk",
+      "sha256": "a35fc1cdcc58b7d4d2107224a07495319c61d353e1788c4d1aad969e6383bbd7",
+      "sizeBytes": 5362980,
+      "known": {
+        "description": "Prebuilt modified APK export template; only a partial AndroidX license was found in the archive."
+      },
+      "releaseRequirements": [
+        {
+          "requirement": "Establish permission to redistribute the original template and its modifications, retain complete dependency/copyright/license notices, and supply corresponding source only where included component licenses require it.",
+          "status": "unresolved",
+          "evidence": []
+        }
+      ],
+      "maintenanceItems": [
+        {
+          "requirement": "Record the template original source repository/revision, local changes and a repeatable build recipe for maintenance.",
+          "status": "unresolved",
+          "evidence": []
+        }
+      ]
+    }
+  ],
+  "releaseRequirements": [
+    {
+      "requirement": "Review the actual packaged runtime and transitive library notices, include applicable copyright/license texts with APKs, and satisfy corresponding-source/rebuild obligations only for components whose licenses impose them.",
+      "status": "unresolved",
+      "evidence": []
+    }
+  ],
+  "maintenanceItems": [
+    {
+      "requirement": "Record the exact imported Material Icon Theme revision and JetBrains Mono release for reproducible upgrades; preserve historical notices if the import is found to require additional attribution. Missing exact revision alone does not block publication.",
+      "status": "unresolved",
+      "evidence": []
+    }
+  ]
+}

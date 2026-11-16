@@ -1,0 +1,98 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+// AGP 9's Android source directory abstraction does not apply Gradle include
+// filters to Java compilation. Materialize this one input as a generated source
+// instead of exposing the entire app instrumentation tree to the driver.
+abstract class PrepareReleaseSmokeSource extends DefaultTask {
+    @InputFile
+    @PathSensitive(PathSensitivity.NAME_ONLY)
+    abstract RegularFileProperty getSourceFile()
+
+    @OutputDirectory
+    abstract DirectoryProperty getOutputDirectory()
+
+    @Inject
+    abstract FileSystemOperations getFileOperations()
+
+    @TaskAction
+    void prepare() {
+        fileOperations.sync {
+            from(sourceFile)
+            into(outputDirectory.dir('com/vkyra/code'))
+        }
+    }
+}
+
+def releaseSmokeSource = tasks.register('prepareReleaseSmokeSource', PrepareReleaseSmokeSource) {
+    sourceFile.set(rootProject.layout.projectDirectory.file('app/src/androidTest/java/com/vkyra/code/ReleaseSmokeTest.java'))
+    outputDirectory.set(layout.buildDirectory.dir('generated/releaseSmokeSource'))
+}
+
+// A separate test-only instrumentation APK owns its complete test runtime. It does
+// not depend on :app, so R8 may optimize the real application without preserving
+// unused AndroidX Test/Kotlin internals merely for a debug test APK's classpath.
+android {
+    namespace 'com.vkyra.code.release.test'
+    compileSdk 37
+
+    defaultConfig {
+        applicationId 'com.vkyra.code.release.test'
+        minSdk 26
+        targetSdk 28
+        versionCode 1
+        versionName '1.0'
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+}
+
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        variant.sources.java.addGeneratedSourceDirectory(releaseSmokeSource) { task -> task.outputDirectory }
+    }
+}
+
+
+dependencies {
+    implementation 'androidx.test:runner:1.7.0'
+    implementation 'androidx.test:core:1.7.0'
+    implementation libs.ext.junit
+    implementation libs.espresso.core
+    implementation libs.junit
+
+    // The project excludes Guava's separate listenablefuture artifact because
+    // the app already gets this interface from Guava 24.1-jre. R8 may rename or
+    // remove the app's test-unused copy; Espresso still requires its original
+    // name, so the independent driver must own that same complete runtime.
+    implementation 'com.google.guava:guava:24.1-jre'
+
+    // Instrumentation and target share a class loader. AndroidX Test otherwise
+    // contributes lifecycle-common 2.3.1, whose Java Lifecycle.Event lacks the
+    // Kotlin Companion ABI used by the target's 2.6.2 LifecycleRegistry. Align
+    // already-shared runtimes to the actual target graph, without packaging the
+    // app or changing its R8 rules. Recheck these constraints when upgrading app
+    // AndroidX/Kotlin dependencies; the three-API release smoke must still pass.
+    constraints {
+        implementation('androidx.lifecycle:lifecycle-common:2.6.2')
+        implementation('androidx.annotation:annotation:1.11.0')
+        implementation('androidx.tracing:tracing:1.2.0')
+        implementation('com.google.errorprone:error_prone_annotations:2.48.0')
+        implementation('org.jetbrains.kotlin:kotlin-stdlib:2.4.10')
+        implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0')
+    }
+
+    // These public target-app View types must not be copied into the driver.
+    compileOnly project(':terminal-view')
+    compileOnly libs.appcompat
+}

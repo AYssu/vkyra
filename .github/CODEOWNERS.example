@@ -1,0 +1,4 @@
+# This example is intentionally inactive. Replace the account below with the real
+# maintainer/team, then rename this file to .github/CODEOWNERS in a reviewed PR.
+# The owner must have write access. After that, enable required code-owner reviews.
+* @YOUR_GITHUB_USERNAME

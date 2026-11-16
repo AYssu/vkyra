@@ -1,0 +1,75 @@
+{
+  "name": "vkyra-light",
+  "colors": {
+    "editor.background": "#FFFFFF",
+    "editor.foreground": "#1F2328"
+  },
+  "tokenColors": [
+    {
+      "settings": {
+        "foreground": "#1F2328",
+        "background": "#FFFFFF"
+      }
+    },
+    {
+      "scope": "comment",
+      "settings": {
+        "foreground": "#66707B"
+      }
+    },
+    {
+      "scope": "keyword",
+      "settings": {
+        "foreground": "#9C36B5"
+      }
+    },
+    {
+      "scope": "string",
+      "settings": {
+        "foreground": "#A31515"
+      }
+    },
+    {
+      "scope": "constant.numeric",
+      "settings": {
+        "foreground": "#098658"
+      }
+    },
+    {
+      "scope": "constant.language",
+      "settings": {
+        "foreground": "#0000FF"
+      }
+    },
+    {
+      "scope": "entity.name.function",
+      "settings": {
+        "foreground": "#795E26"
+      }
+    },
+    {
+      "scope": "entity.name.type",
+      "settings": {
+        "foreground": "#267F99"
+      }
+    },
+    {
+      "scope": "support.type",
+      "settings": {
+        "foreground": "#267F99"
+      }
+    },
+    {
+      "scope": "variable",
+      "settings": {
+        "foreground": "#1F2328"
+      }
+    },
+    {
+      "scope": "invalid",
+      "settings": {
+        "foreground": "#F44747"
+      }
+    }
+  ]
+}

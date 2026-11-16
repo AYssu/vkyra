@@ -1,0 +1,119 @@
+{
+  "name": "C++",
+  "scopeName": "source.cpp",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#preprocessor" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#keywords" },
+    { "include": "#types" },
+    { "include": "#functions" },
+    { "include": "#operators" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.cpp",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.cpp",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "preprocessor": {
+      "patterns": [
+        {
+          "name": "meta.preprocessor.cpp",
+          "match": "^\\s*#\\s*(include|define|undef|ifdef|ifndef|endif|elif|else|if|pragma|error|warning)\\b.*$",
+          "captures": {
+            "1": { "name": "keyword.control.directive.cpp" }
+          }
+        },
+        {
+          "name": "string.quoted.other.include.cpp",
+          "match": "#\\s*include\\s*[<\"]([^>\"]*)[>\"]",
+          "captures": {
+            "1": { "name": "string.quoted.include.cpp" }
+          }
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.cpp",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.cpp",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.cpp",
+          "begin": "'",
+          "end": "'"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.hex.cpp",
+          "match": "\\b0[xX][0-9a-fA-F]+\\b"
+        },
+        {
+          "name": "constant.numeric.float.cpp",
+          "match": "\\b[0-9]+\\.[0-9]+([eE][+-]?[0-9]+)?[fFlL]?\\b"
+        },
+        {
+          "name": "constant.numeric.integer.cpp",
+          "match": "\\b[0-9]+[uUlL]*\\b"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.cpp",
+          "match": "\\b(if|else|for|while|do|switch|case|default|break|continue|return|goto|try|catch|throw)\\b"
+        },
+        {
+          "name": "keyword.other.cpp",
+          "match": "\\b(new|delete|sizeof|alignof|typeid|decltype|noexcept|nullptr|this|true|false)\\b"
+        },
+        {
+          "name": "storage.modifier.cpp",
+          "match": "\\b(const|static|extern|inline|virtual|override|final|mutable|volatile|register|explicit|constexpr|consteval|constinit|thread_local)\\b"
+        },
+        {
+          "name": "storage.type.cpp",
+          "match": "\\b(class|struct|union|enum|typedef|typename|template|namespace|using|public|private|protected|friend|operator)\\b"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "storage.type.primitive.cpp",
+          "match": "\\b(void|bool|char|wchar_t|char8_t|char16_t|char32_t|short|int|long|signed|unsigned|float|double|auto)\\b"
+        },
+        {
+          "name": "storage.type.stdint.cpp",
+          "match": "\\b(int8_t|int16_t|int32_t|int64_t|uint8_t|uint16_t|uint32_t|uint64_t|size_t|ptrdiff_t)\\b"
+        },
+        {
+          "name": "entity.name.type.cpp",
+          "match": "\\b(string|vector|map|set|list|deque|array|pair|tuple|unique_ptr|shared_ptr|weak_ptr|optional|variant|any|function|thread|mutex|atomic|future|promise)\\b"
+        }
+      ]
+    }
+  }
+}

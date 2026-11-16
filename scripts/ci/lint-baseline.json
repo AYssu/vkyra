@@ -1,0 +1,2543 @@
+{
+  "schema": 1,
+  "policy": "Only inherited exact issue + message + file fingerprints are allowed. Counts may decrease. New warnings fail CI. Changes require an explicit maintainer-reviewed explanation; never auto-update in CI.",
+  "source": "Actual app lintX86_64Debug XML at initial public CI setup, 2026-11-16. See docs/MAINTENANCE.md for triage and upgrade policy.",
+  "totalWarnings": 449,
+  "warnings": [
+    {
+      "id": "AlwaysShowAction",
+      "message": "Prefer \"`SHOW_AS_ACTION_IF_ROOM`\" instead of \"`SHOW_AS_ACTION_ALWAYS`\"",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/editor/EditorActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "AlwaysShowAction",
+      "message": "Prefer \"`ifRoom`\" instead of \"`always`\"",
+      "locations": [
+        "app/src/main/res/menu/editor_menu.xml",
+        "app/src/main/res/menu/editor_menu.xml",
+        "app/src/main/res/menu/editor_menu.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "AndroidGradlePluginVersion",
+      "message": "A newer version of Gradle than 9.4.1 is available: 9.9.1",
+      "locations": [
+        "gradle/wrapper/gradle-wrapper.properties"
+      ],
+      "count": 1
+    },
+    {
+      "id": "AndroidGradlePluginVersion",
+      "message": "A newer version of com.android.application than 9.2.1 is available: 9.5.1",
+      "locations": [
+        "gradle/libs.versions.toml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Autofill",
+      "message": "Missing `autofillHints` attribute",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 2
+    },
+    {
+      "id": "ButtonStyle",
+      "message": "Buttons in button bars should be borderless; use `style=\"?android:attr/buttonBarButtonStyle\"` (and `?android:attr/buttonBarStyle` on the parent)",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 47
+    },
+    {
+      "id": "ClickableViewAccessibility",
+      "message": "Custom view ``ImageView`` has `setOnTouchListener` called on it but does not override `performClick`",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/editor/EditorActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ClickableViewAccessibility",
+      "message": "Custom view ``TerminalView`` has `setOnTouchListener` called on it but does not override `performClick`",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/terminal/TerminalActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ClickableViewAccessibility",
+      "message": "`onTouch` lambda should call `View#performClick` when a click is detected",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/editor/EditorActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ClickableViewAccessibility",
+      "message": "`onTouch` lambda should call `View#performClick` when a click is detected",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/terminal/TerminalActivity.java"
+      ],
+      "count": 2
+    },
+    {
+      "id": "ConstantLocale",
+      "message": "Assigning `Locale.getDefault()` to a final static field is suspicious; this code will not work correctly if the user changes locale while the app is running",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/signature/FileLogger.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ContentDescription",
+      "message": "Missing `contentDescription` attribute on image",
+      "locations": [
+        "app/src/main/res/layout/action_run_split_button.xml"
+      ],
+      "count": 2
+    },
+    {
+      "id": "ContentDescription",
+      "message": "Missing `contentDescription` attribute on image",
+      "locations": [
+        "app/src/main/res/layout/activity_crash.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ContentDescription",
+      "message": "Missing `contentDescription` attribute on image",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 2
+    },
+    {
+      "id": "ContentDescription",
+      "message": "Missing `contentDescription` attribute on image",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 7
+    },
+    {
+      "id": "ContentDescription",
+      "message": "Missing `contentDescription` attribute on image",
+      "locations": [
+        "app/src/main/res/layout/activity_plugin.xml"
+      ],
+      "count": 2
+    },
+    {
+      "id": "ContentDescription",
+      "message": "Missing `contentDescription` attribute on image",
+      "locations": [
+        "app/src/main/res/layout/item_acknowledgement.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ContentDescription",
+      "message": "Missing `contentDescription` attribute on image",
+      "locations": [
+        "app/src/main/res/layout/item_file.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ContentDescription",
+      "message": "Missing `contentDescription` attribute on image",
+      "locations": [
+        "app/src/main/res/layout/item_plugin.xml"
+      ],
+      "count": 2
+    },
+    {
+      "id": "ContentDescription",
+      "message": "Missing `contentDescription` attribute on image",
+      "locations": [
+        "app/src/main/res/layout/item_run_option.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ContentDescription",
+      "message": "Missing `contentDescription` attribute on image",
+      "locations": [
+        "app/src/main/res/layout/item_sponsor.xml"
+      ],
+      "count": 3
+    },
+    {
+      "id": "DefaultLocale",
+      "message": "Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/editor/EditorActivity.java"
+      ],
+      "count": 6
+    },
+    {
+      "id": "DefaultLocale",
+      "message": "Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/plugin/PluginZipExtractor.java"
+      ],
+      "count": 3
+    },
+    {
+      "id": "DefaultLocale",
+      "message": "Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/settings/SettingsActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "DefaultLocale",
+      "message": "Implicitly using the default locale is a common source of bugs: Use `String.format(Locale, ...)` instead",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/signature/ApkUtils.java"
+      ],
+      "count": 2
+    },
+    {
+      "id": "DefaultLocale",
+      "message": "Implicitly using the default locale is a common source of bugs: Use `toLowerCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/editor/CppHeaders.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "DefaultLocale",
+      "message": "Implicitly using the default locale is a common source of bugs: Use `toLowerCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/editor/CppLanguage.java"
+      ],
+      "count": 7
+    },
+    {
+      "id": "DefaultLocale",
+      "message": "Implicitly using the default locale is a common source of bugs: Use `toLowerCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/editor/EditorActivity.java"
+      ],
+      "count": 4
+    },
+    {
+      "id": "DefaultLocale",
+      "message": "Implicitly using the default locale is a common source of bugs: Use `toLowerCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/files/FileIconProvider.java"
+      ],
+      "count": 5
+    },
+    {
+      "id": "DefaultLocale",
+      "message": "Implicitly using the default locale is a common source of bugs: Use `toLowerCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/plugin/PluginActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "DefaultLocale",
+      "message": "Implicitly using the default locale is a common source of bugs: Use `toLowerCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/plugin/PluginHookManager.java"
+      ],
+      "count": 4
+    },
+    {
+      "id": "DisableBaselineAlignment",
+      "message": "Set `android:baselineAligned=\"false\"` on this element for better performance",
+      "locations": [
+        "app/src/main/res/layout/item_acknowledgement.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "GradleDependency",
+      "message": "A newer version of androidx.activity:activity than 1.12.4 is available: 1.13.0",
+      "locations": [
+        "gradle/libs.versions.toml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "GradleDependency",
+      "message": "A newer version of androidx.appcompat:appcompat than 1.7.1 is available: 1.8.0",
+      "locations": [
+        "gradle/libs.versions.toml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "GradleDependency",
+      "message": "A newer version of androidx.constraintlayout:constraintlayout than 2.2.1 is available: 2.2.2",
+      "locations": [
+        "gradle/libs.versions.toml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "GradleDependency",
+      "message": "A newer version of com.android.tools.build:apksig than 9.0.1 is available: 9.5.1",
+      "locations": [
+        "gradle/libs.versions.toml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "GradleDependency",
+      "message": "A newer version of com.google.android.material:material than 1.13.0 is available: 1.14.0",
+      "locations": [
+        "gradle/libs.versions.toml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"$ _\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"$ akode --version\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"(\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/item_symbol_key.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"-\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \".\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"/\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"/storage/emulated/0\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"0\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"0/0\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"1\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"123\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"2\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"3\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"4\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"5\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"6\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"7\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"8\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"9\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"A\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"ABC\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"AP\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"Alt\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_terminal.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"B\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"C 示例\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_new_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"C\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"C++ 示例\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_new_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"CMake 项目\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_new_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"Clang 编译器\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"Ctrl\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_terminal.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"D\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"E\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"End\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_terminal.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"Esc\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_terminal.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"F\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"G\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"Git\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/menu/editor_menu.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"H\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"Home\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_terminal.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"I\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"J\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"K\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"L\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"M\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"Make 项目\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_new_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"N\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"NDK 项目\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_new_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"O\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"P\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"Q\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"R\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"S\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"T\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"Tab\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_terminal.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"U\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"V\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"W\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"X\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"Y\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"Z\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"_\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"arm64-v8a\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/item_plugin.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"filename\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/item_file.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"info\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/item_file.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"untitled.cpp\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"v1.0.0, 作者 匿名\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/item_plugin.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"←\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_terminal.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"↑\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_terminal.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"→\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_terminal.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"↓\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_terminal.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"⇄\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_terminal.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"⋯\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_terminal.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"上一个\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"下一个\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"代码编辑器\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"保存\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/menu/editor_menu.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"全部\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"关闭\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_crash.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"关闭\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"其他选项\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_new_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"创建 README.md\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_new_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"创建项目\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_new_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"初始化为 Git 仓库\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_new_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"删除\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 2
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"加载失败，点击查看原因\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/item_plugin.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"卸载\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/item_plugin.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"取消\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_new_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"命令行环境\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"复制错误\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_crash.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"定位当前文件\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"工具链状态\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"已就绪\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"当前\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"很抱歉，应用遇到了问题\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_crash.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"快速启动\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"您可以重启应用或复制错误信息反馈给开发者\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_crash.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"打开终端\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/menu/editor_menu.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"扩展功能管理\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"拖动排序\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/item_symbol_key.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"插件\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"插件名称\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/item_plugin.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"插件描述\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/item_plugin.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"插入文本\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/item_symbol_key.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"新建文件\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"新建文件夹\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"暂无插件\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_plugin.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"替换\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"替换为\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"最近项目\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"查找\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"查找替换\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/menu/editor_menu.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"格式化代码\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/menu/editor_menu.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"点击右下角安装插件\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_plugin.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"点击快速打开\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"空文件夹\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_new_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"空格\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 2
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"终端\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"编写、编译、运行 C++ 代码\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"编译命令\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/menu/editor_menu.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"编译模式\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/menu/editor_menu.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"设置\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/menu/editor_menu.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"设置\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/menu/main_menu.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"资源管理器\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"跳转到行\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/menu/editor_menu.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"运行\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/action_run_split_button.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"运行\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/menu/editor_menu.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"选择模板\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_new_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"重启应用\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_crash.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"项目名称\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_new_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"项目路径: /storage/emulated/0/Akode/\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/activity_new_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "HardcodedText",
+      "message": "Hardcoded string \"默认\", should use `@string` resource",
+      "locations": [
+        "app/src/main/res/layout/item_compile_command.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "IconDuplicates",
+      "message": "The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp",
+      "locations": [
+        "app/src/main/res/mipmap-hdpi/ic_launcher.webp",
+        "app/src/main/res/mipmap-hdpi/ic_launcher_round.webp"
+      ],
+      "count": 1
+    },
+    {
+      "id": "IconDuplicates",
+      "message": "The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp",
+      "locations": [
+        "app/src/main/res/mipmap-mdpi/ic_launcher.webp",
+        "app/src/main/res/mipmap-mdpi/ic_launcher_round.webp"
+      ],
+      "count": 1
+    },
+    {
+      "id": "IconDuplicates",
+      "message": "The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp",
+      "locations": [
+        "app/src/main/res/mipmap-xhdpi/ic_launcher.webp",
+        "app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp"
+      ],
+      "count": 1
+    },
+    {
+      "id": "IconDuplicates",
+      "message": "The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp",
+      "locations": [
+        "app/src/main/res/mipmap-xxhdpi/ic_launcher.webp",
+        "app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp"
+      ],
+      "count": 1
+    },
+    {
+      "id": "IconDuplicates",
+      "message": "The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp",
+      "locations": [
+        "app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp",
+        "app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp"
+      ],
+      "count": 1
+    },
+    {
+      "id": "InsecureBaseConfiguration",
+      "message": "Insecure Base Configuration",
+      "locations": [
+        "app/src/main/res/xml/network_security_config.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "MonochromeLauncherIcon",
+      "message": "The application adaptive icon is missing a monochrome tag",
+      "locations": [
+        "app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "MonochromeLauncherIcon",
+      "message": "The application adaptive roundIcon is missing a monochrome tag",
+      "locations": [
+        "app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "NewerVersionAvailable",
+      "message": "A newer version of com.google.code.gson:gson than 2.13.2 is available: 2.15.0",
+      "locations": [
+        "gradle/libs.versions.toml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "NewerVersionAvailable",
+      "message": "A newer version of io.github.reandroid:ARSCLib than 1.3.8 is available: 1.4.0",
+      "locations": [
+        "gradle/libs.versions.toml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "NewerVersionAvailable",
+      "message": "A newer version of org.bouncycastle:bcpkix-jdk18on than 1.83 is available: 1.87",
+      "locations": [
+        "gradle/libs.versions.toml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "NewerVersionAvailable",
+      "message": "A newer version of org.bouncycastle:bcprov-jdk18on than 1.83 is available: 1.87",
+      "locations": [
+        "gradle/libs.versions.toml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "NotifyDataSetChanged",
+      "message": "It will always be more efficient to use more specific change events if you can. Rely on `notifyDataSetChanged` as a last resort.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/editor/EditorActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "NotifyDataSetChanged",
+      "message": "It will always be more efficient to use more specific change events if you can. Rely on `notifyDataSetChanged` as a last resort.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/files/FileAdapter.java"
+      ],
+      "count": 4
+    },
+    {
+      "id": "NotifyDataSetChanged",
+      "message": "It will always be more efficient to use more specific change events if you can. Rely on `notifyDataSetChanged` as a last resort.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/home/MainActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "NotifyDataSetChanged",
+      "message": "It will always be more efficient to use more specific change events if you can. Rely on `notifyDataSetChanged` as a last resort.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/plugin/PluginActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "NotifyDataSetChanged",
+      "message": "It will always be more efficient to use more specific change events if you can. Rely on `notifyDataSetChanged` as a last resort.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/plugin/PluginAdapter.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "NotifyDataSetChanged",
+      "message": "It will always be more efficient to use more specific change events if you can. Rely on `notifyDataSetChanged` as a last resort.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/settings/SettingsActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ObsoleteSdkInt",
+      "message": "This folder configuration (`v26`) is unnecessary; `minSdkVersion` is 26. Merge all the resources in this folder into `mipmap-anydpi`.",
+      "locations": [
+        "app/src/main/res/mipmap-anydpi-v26"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ObsoleteSdkInt",
+      "message": "Unnecessary; `Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT` is always true here (`SDK_INT` ≥ 26 and < 30)",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/terminal/TerminalActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ObsoleteSdkInt",
+      "message": "Unnecessary; `Build.VERSION.SDK_INT >= Build.VERSION_CODES.M` is always true here (`SDK_INT` ≥ 26 and < 30)",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/home/MainActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ObsoleteSdkInt",
+      "message": "Unnecessary; `SDK_INT` is always >= 26",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/crash/CrashActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ObsoleteSdkInt",
+      "message": "Unnecessary; `SDK_INT` is always >= 26",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/home/MainActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ObsoleteSdkInt",
+      "message": "Unnecessary; `SDK_INT` is always >= 26",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/plugin/PluginActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ObsoleteSdkInt",
+      "message": "Unnecessary; `SDK_INT` is always >= 26",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/project/NewProjectActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "ObsoleteSdkInt",
+      "message": "Unnecessary; `SDK_INT` is always >= 26",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/terminal/TerminalActivity.java"
+      ],
+      "count": 2
+    },
+    {
+      "id": "ObsoleteSdkInt",
+      "message": "Unnecessary; `SDK_INT` is never < 26",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/files/StorageAccessPolicy.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Overdraw",
+      "message": "Possible overdraw: Root element paints background `#121212` with a theme that also paints a background (inferred theme is `@style/Theme.FastScan`)",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Overdraw",
+      "message": "Possible overdraw: Root element paints background `#121212` with a theme that also paints a background (inferred theme is `@style/Theme_FastScan_Settings`)",
+      "locations": [
+        "app/src/main/res/layout/activity_new_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Overdraw",
+      "message": "Possible overdraw: Root element paints background `#121212` with a theme that also paints a background (inferred theme is `@style/Theme_FastScan_Settings`)",
+      "locations": [
+        "app/src/main/res/layout/activity_plugin.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Overdraw",
+      "message": "Possible overdraw: Root element paints background `#121212` with a theme that also paints a background (inferred theme is `@style/Theme_FastScan`)",
+      "locations": [
+        "app/src/main/res/layout/activity_crash.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Overdraw",
+      "message": "Possible overdraw: Root element paints background `#1C1B1F` with a theme that also paints a background (inferred theme is `@style/Theme_FastScan_Settings`)",
+      "locations": [
+        "app/src/main/res/layout/activity_settings.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Overdraw",
+      "message": "Possible overdraw: Root element paints background `#FF000000` with a theme that also paints a background (inferred theme is `@style/Theme_FastScan_Terminal`)",
+      "locations": [
+        "app/src/main/res/layout/activity_terminal.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Overdraw",
+      "message": "Possible overdraw: Root element paints background `#FF1C1C1E` with a theme that also paints a background (inferred theme is `@style/Theme.FastScan`)",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Overdraw",
+      "message": "Possible overdraw: Root element paints background `?attr/selectableItemBackground` with a theme that also paints a background (inferred theme is `@style/Theme.FastScan`)",
+      "locations": [
+        "app/src/main/res/layout/item_file.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Overdraw",
+      "message": "Possible overdraw: Root element paints background `?attr/selectableItemBackground` with a theme that also paints a background (inferred theme is `@style/Theme.FastScan`)",
+      "locations": [
+        "app/src/main/res/layout/item_recent_project.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Overdraw",
+      "message": "Possible overdraw: Root element paints background `?attr/selectableItemBackground` with a theme that also paints a background (inferred theme is `@style/Theme_FastScan_Editor_Light`)",
+      "locations": [
+        "app/src/main/res/layout/item_menu_option.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Overdraw",
+      "message": "Possible overdraw: Root element paints background `?attr/selectableItemBackground` with a theme that also paints a background (inferred theme is `@style/Theme_FastScan_Editor_Light`)",
+      "locations": [
+        "app/src/main/res/layout/item_run_option.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Overdraw",
+      "message": "Possible overdraw: Root element paints background `?attr/selectableItemBackground` with a theme that also paints a background (inferred theme is `@style/Theme_FastScan_Editor_Light`)",
+      "locations": [
+        "app/src/main/res/layout/item_symbol_key.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Overdraw",
+      "message": "Possible overdraw: Root element paints background `?attr/selectableItemBackground` with a theme that also paints a background (inferred theme is `@style/Theme_FastScan_Settings`)",
+      "locations": [
+        "app/src/main/res/layout/item_acknowledgement.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Overdraw",
+      "message": "Possible overdraw: Root element paints background `?attr/selectableItemBackground` with a theme that also paints a background (inferred theme is `@style/Theme_FastScan_Settings`)",
+      "locations": [
+        "app/src/main/res/layout/item_compile_command.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "Overdraw",
+      "message": "Possible overdraw: Root element paints background `?attr/selectableItemBackground` with a theme that also paints a background (inferred theme is `@style/Theme_FastScan_Settings`)",
+      "locations": [
+        "app/src/main/res/layout/item_sponsor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "PrivateResource",
+      "message": "Overriding `@layout/preference_widget_switch` which is marked as private in androidx.preference:preference:1.2.1. If deliberate, use tools:override=\"true\", otherwise pick a different name.",
+      "locations": [
+        "app/src/main/res/layout/preference_widget_switch.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "RtlSymmetry",
+      "message": "When you define `paddingStart` you should probably also define `paddingEnd` for right-to-left symmetry",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "SetTextI18n",
+      "message": "Do not concatenate text displayed with `setText`. Use resource string with placeholders.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/editor/EditorActivity.java"
+      ],
+      "count": 12
+    },
+    {
+      "id": "SetTextI18n",
+      "message": "Do not concatenate text displayed with `setText`. Use resource string with placeholders.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/files/FileAdapter.java"
+      ],
+      "count": 2
+    },
+    {
+      "id": "SetTextI18n",
+      "message": "Do not concatenate text displayed with `setText`. Use resource string with placeholders.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/home/MainActivity.java"
+      ],
+      "count": 5
+    },
+    {
+      "id": "SetTextI18n",
+      "message": "Do not concatenate text displayed with `setText`. Use resource string with placeholders.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/installer/InstallerDialogs.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "SetTextI18n",
+      "message": "Do not concatenate text displayed with `setText`. Use resource string with placeholders.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/project/NewProjectActivity.java"
+      ],
+      "count": 2
+    },
+    {
+      "id": "SetTextI18n",
+      "message": "Do not concatenate text displayed with `setText`. Use resource string with placeholders.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/settings/SettingsActivity.java"
+      ],
+      "count": 3
+    },
+    {
+      "id": "SetTextI18n",
+      "message": "String literal in `setText` can not be translated. Use Android resources instead.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/editor/EditorActivity.java"
+      ],
+      "count": 11
+    },
+    {
+      "id": "SetTextI18n",
+      "message": "String literal in `setText` can not be translated. Use Android resources instead.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/home/MainActivity.java"
+      ],
+      "count": 4
+    },
+    {
+      "id": "SetTextI18n",
+      "message": "String literal in `setText` can not be translated. Use Android resources instead.",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/settings/SettingsActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "SmallSp",
+      "message": "Avoid using sizes smaller than `11sp`: `10sp`",
+      "locations": [
+        "app/src/main/res/layout/activity_terminal.xml"
+      ],
+      "count": 11
+    },
+    {
+      "id": "SmallSp",
+      "message": "Avoid using sizes smaller than `11sp`: `10sp`",
+      "locations": [
+        "app/src/main/res/layout/item_compile_command.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "StaticFieldLeak",
+      "message": "Do not place Android context classes in static fields (static reference to `PluginHookManager` which has field `context` pointing to `Context`); this is a memory leak",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/plugin/PluginManager.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "TooDeepLayout",
+      "message": "`activity_main.xml` has more than 10 levels, bad for performance",
+      "locations": [
+        "app/src/main/res/layout/activity_main.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "TrustAllX509TrustManager",
+      "message": "`checkClientTrusted` is empty, which could cause insecure network traffic due to trusting arbitrary TLS/SSL certificates presented by peers",
+      "locations": [
+        "$GRADLE_CACHE/modules-2/files-2.1/org.eclipse.jgit/org.eclipse.jgit/5.13.3.202401111512-r/7949cce60ba913f99259a0f421ab5ebf6c2524b4/org.eclipse.jgit-5.13.3.202401111512-r.jar"
+      ],
+      "count": 1
+    },
+    {
+      "id": "TrustAllX509TrustManager",
+      "message": "`checkServerTrusted` is empty, which could cause insecure network traffic due to trusting arbitrary TLS/SSL certificates presented by peers",
+      "locations": [
+        "$GRADLE_CACHE/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk18on/1.83/3f4300d0441459bfa64a481c80062b002ff0cf65/bcpkix-jdk18on-1.83.jar"
+      ],
+      "count": 1
+    },
+    {
+      "id": "TrustAllX509TrustManager",
+      "message": "`checkServerTrusted` is empty, which could cause insecure network traffic due to trusting arbitrary TLS/SSL certificates presented by peers",
+      "locations": [
+        "$GRADLE_CACHE/modules-2/files-2.1/org.eclipse.jgit/org.eclipse.jgit/5.13.3.202401111512-r/7949cce60ba913f99259a0f421ab5ebf6c2524b4/org.eclipse.jgit-5.13.3.202401111512-r.jar"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.color.black` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/colors.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.color.white` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/colors.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.card_corner_radius` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.card_elevation` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.card_padding` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.card_width_max` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.card_width` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.icon_size_large` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.icon_size_medium` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.icon_size_small` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.main_padding_large` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.main_padding_small` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.main_padding` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.spacing_large` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.spacing_medium` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.spacing_small` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.spacing_xlarge` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.spacing_xxlarge` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.welcome_margin_bottom` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.dimen.welcome_margin_top` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/dimens.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.btn_send_bg` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/btn_send_bg.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.button_control_transparent` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/button_control_transparent.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.button_control_visible` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/button_control_visible.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.button_control` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/button_control.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.button_terminal_transparent` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/button_terminal_transparent.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.button_terminal` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/button_terminal.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.custom_toast_background` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/custom_toast_background.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_add_24` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_add_24.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_arrow_back_24` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_arrow_back_24.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_arrow_right` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_arrow_right.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_back` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_back.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_check` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_check.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_clear_24` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_clear_24.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_code` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_code.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_content_copy_24` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_content_copy_24.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_content_paste_24` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_content_paste_24.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_copy` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_copy.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_cpp_file` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_cpp_file.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_edit` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_edit.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_file_code` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_file_code.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_file_default` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_file_default.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_help_24` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_help_24.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_history` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_history.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_keyboard_close` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_keyboard_close.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_launcher_background` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_launcher_background.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_make` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_make.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_play` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_play.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_redo` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_redo.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_replace_all` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_replace_all.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_replace_one` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_replace_one.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_send_arrow` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_send_arrow.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_send_modern` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_send_modern.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_send` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_send.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_settings_24` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_settings_24.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_symbols` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_symbols.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_tab` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_tab.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ic_undo` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ic_undo.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ios_control_bar_background` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ios_control_bar_background.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ios_control_button` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ios_control_button.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ios_green_button` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ios_green_button.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ios_red_button` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ios_red_button.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.ios_yellow_button` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/ios_yellow_button.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.keyboard_background` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/keyboard_background.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.keyboard_button_background_dark` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/keyboard_button_background_dark.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.keyboard_button_background` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/keyboard_button_background.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.keyboard_button_transparent` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/keyboard_button_transparent.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.keyboard_title_bar_background` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/keyboard_title_bar_background.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.material_button_press_effect` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/material_button_press_effect.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.status_badge_applied` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/status_badge_applied.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.status_badge_pending` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/status_badge_pending.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.status_badge_rejected` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/status_badge_rejected.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.status_dot` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/status_dot.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.status_indicator_background` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/status_indicator_background.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.switch_thumb` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/switch_thumb.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.drawable.switch_track` appears to be unused",
+      "locations": [
+        "app/src/main/res/drawable/switch_track.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.integer.version_code` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/version.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.layout.custom_keyboard` appears to be unused",
+      "locations": [
+        "app/src/main/res/layout/custom_keyboard.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.layout.custom_toast` appears to be unused",
+      "locations": [
+        "app/src/main/res/layout/custom_toast.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.layout.dialog_acknowledgements` appears to be unused",
+      "locations": [
+        "app/src/main/res/layout/dialog_acknowledgements.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.layout.preference_widget_switch` appears to be unused",
+      "locations": [
+        "app/src/main/res/layout/preference_widget_switch.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.string.version_name` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/version.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UnusedResources",
+      "message": "The resource `R.style.ThemeOverlay_FastScan_MaterialAlertDialog` appears to be unused",
+      "locations": [
+        "app/src/main/res/values/themes.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UsableSpace",
+      "message": "Consider also using `StorageManager#getAllocatableBytes` and `allocateBytes` which will consider clearable cached data",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/plugin/PluginZipExtractor.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UseCompatLoadingForDrawables",
+      "message": "Use `AppCompatResources.getDrawable()`",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/editor/EditorActivity.java"
+      ],
+      "count": 2
+    },
+    {
+      "id": "UseCompatLoadingForDrawables",
+      "message": "Use `AppCompatResources.getDrawable()`",
+      "locations": [
+        "app/src/main/java/com/vkyra/code/home/MainActivity.java"
+      ],
+      "count": 1
+    },
+    {
+      "id": "UselessParent",
+      "message": "This `LinearLayout` layout or its `FrameLayout` parent is unnecessary; transfer the `background` attribute to the other view",
+      "locations": [
+        "app/src/main/res/layout/activity_editor.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "VectorPath",
+      "message": "Very long vector path (18868 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.",
+      "locations": [
+        "app/src/main/res/drawable/ic_launcher_foreground.xml"
+      ],
+      "count": 1
+    },
+    {
+      "id": "VectorPath",
+      "message": "Very long vector path (25918 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector.",
+      "locations": [
+        "app/src/main/res/drawable/ic_launcher_foreground.xml"
+      ],
+      "count": 1
+    }
+  ]
+}
