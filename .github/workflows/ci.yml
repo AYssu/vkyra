@@ -74,8 +74,10 @@ jobs:
         run: |
           sdk_root="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
           test -n "$sdk_root"
-          echo "root=$sdk_root" >> "$GITHUB_OUTPUT"
-          echo "epoch=$(date -u +%Y-%m)" >> "$GITHUB_OUTPUT"
+          {
+            echo "root=$sdk_root"
+            echo "epoch=$(date -u +%Y-%m)"
+          } >> "$GITHUB_OUTPUT"
       - name: Restore Android build SDK
         id: sdk-cache
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
@@ -162,9 +164,11 @@ jobs:
           test -n "$sdk_root"
           image_api="$API"
           if [[ "$API" == 37 ]]; then image_api=37.0; fi
-          echo "root=$sdk_root" >> "$GITHUB_OUTPUT"
-          echo "image_api=$image_api" >> "$GITHUB_OUTPUT"
-          echo "epoch=$(date -u +%Y-%m)" >> "$GITHUB_OUTPUT"
+          {
+            echo "root=$sdk_root"
+            echo "image_api=$image_api"
+            echo "epoch=$(date -u +%Y-%m)"
+          } >> "$GITHUB_OUTPUT"
       - name: Restore dedicated emulator SDK
         id: sdk-cache
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
