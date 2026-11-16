@@ -102,8 +102,11 @@ public class EditorSessionRegressionTest {
                 });
             });
             androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom(com.google.android.material.textfield.TextInputEditText.class))
-                    .perform(androidx.test.espresso.action.ViewActions.replaceText("saved-draft.cpp"));
-            androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.withText("保存"))
+                    .inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog())
+                    .perform(androidx.test.espresso.action.ViewActions.replaceText("saved-draft.cpp"),
+                            androidx.test.espresso.action.ViewActions.closeSoftKeyboard());
+            androidx.test.espresso.Espresso.onView(androidx.test.espresso.matcher.ViewMatchers.withId(android.R.id.button1))
+                    .inRoot(androidx.test.espresso.matcher.RootMatchers.isDialog())
                     .perform(androidx.test.espresso.action.ViewActions.click());
             assertTrue(continued.await(10,TimeUnit.SECONDS));
             assertEquals(f.first,built.get());
