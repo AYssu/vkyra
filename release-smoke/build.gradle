@@ -89,7 +89,7 @@ dependencies {
         implementation('androidx.tracing:tracing:1.2.0')
         implementation('com.google.errorprone:error_prone_annotations:2.48.0')
         implementation('org.jetbrains.kotlin:kotlin-stdlib:2.4.10')
-        implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0')
+        implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0')
     }
 
     // These public target-app View types must not be copied into the driver.
