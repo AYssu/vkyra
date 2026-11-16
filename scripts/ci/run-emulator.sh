@@ -25,8 +25,14 @@ printf 'no\n' | "$avdmanager_bin" create avd --name "$avd_name" --path "$ANDROID
 [[ -f "$ANDROID_AVD_HOME/$avd_name.ini" ]] || { echo 'AVD configuration was not created in ANDROID_AVD_HOME.' >&2; exit 1; }
 "$sdk_root/emulator/emulator" -list-avds | grep -Fx "$avd_name"
 mkdir -p build/ci-evidence
+graphics_features=()
+if [[ "$api" == 37 ]]; then
+  # API 37's mapper requires DMA readback for activity/task snapshots.
+  # gfxstream advertises it only with direct memory and shared-slot allocation.
+  graphics_features=(-feature GLDirectMem -feature HasSharedSlotsHostMemoryAllocator)
+fi
 "$sdk_root/emulator/emulator" -avd "$avd_name" -port 5556 -no-window -no-audio -no-boot-anim \
-  -no-snapshot -gpu swiftshader -memory 3072 -cores 2 >build/ci-evidence/emulator.log 2>&1 &
+  -no-snapshot -gpu swiftshader "${graphics_features[@]}" -memory 3072 -cores 2 >build/ci-evidence/emulator.log 2>&1 &
 emulator_pid=$!
 cleanup() {
   # Kill only the process created above, never another emulator/device.
